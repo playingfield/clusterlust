@@ -1,0 +1,93 @@
+[
+    {
+        "name": "jumphost",
+        "autostart": true,
+        "cpus": 2,
+        "distro": "almalinux",
+        "family": "redhat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "192.168.56.10",
+        "memory": "4096",
+        "no_share": true,
+        "primary": true
+    },
+    {
+        "name": "k8s-master01",
+        "autostart": true,
+        "cpus": 2,
+        "distro": "almalinux",
+        "family": "redhat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "192.168.56.33",
+        "memory": "4048",
+        "no_share": true,
+        "primary": false
+    },
+    {
+        "name": "k8s-master02",
+        "autostart": true,
+        "cpus": 2,
+        "distro": "almalinux",
+        "family": "redhat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "192.168.56.34",
+        "memory": "4048",
+        "no_share": true,
+        "primary": false
+    },
+    {
+        "name": "k8s-master03",
+        "autostart": true,
+        "cpus": 2,
+        "distro": "almalinux",
+        "family": "redhat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "192.168.56.35",
+        "memory": "4048",
+        "no_share": true,
+        "primary": false
+    },
+    {
+        "name": "k8s-node01",
+        "autostart": true,
+        "cpus": 4,
+        "distro": "almalinux",
+        "family": "redhat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "192.168.56.40",
+        "memory": "4048",
+        "no_share": true,
+        "primary": false
+    },
+    {
+        "name": "k8s-node02",
+        "autostart": true,
+        "cpus": 4,
+        "distro": "almalinux",
+        "family": "redhat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "192.168.56.41",
+        "memory": "4048",
+        "no_share": true,
+        "primary": false
+    },
+    {
+        "name": "k8s-node03",
+        "autostart": true,
+        "cpus": 4,
+        "distro": "almalinux",
+        "family": "redhat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "192.168.56.42",
+        "memory": "4048",
+        "no_share": true,
+        "primary": false
+    }
+]

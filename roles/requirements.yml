@@ -1,0 +1,8 @@
+---
+collections:
+   - name: https://github.com/kubernetes-sigs/kubespray.git
+     type: git
+
+roles:
+  - src: https://github.com/ansiblebook/ansible_role_ssh.git
+    name: openssh
