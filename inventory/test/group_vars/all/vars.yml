@@ -1,9 +1,28 @@
 ---
-
-calico_version: "v3.28.0"
-calico_cni_version: "v3.28.0"
-container_manager: containerd
-containerd_version: "containerd.io-1.6.31"
+calico_version: "v3.27.3"
+cluster_name: test
+container_manager: containerd  # default
+containerd_version: "1.6.31"
+dns_mode: coredns
+upstream_dns_servers:
+  - 10.0.0.205
+  - 168.63.129.16
 docker_version: "docker-ce-26.1.0"
-etcd_version: "3.5.12-0"
-kube_version: "1.28.9"
+etcd_version: "v3.5.12"
+etcd_deployment_type: host
+helm_enabled: true
+helm_version: "v3.13.3"
+kube_version: "v1.28.9"
+kube_pods_subnet: "192.168.0.0/16"
+
+ntp_enabled: true
+ntp_timezone: Europe/Amsterdam
+ntp_manage_config: true
+ntp_servers:
+  - "0.nl.pool.ntp.org"
+  - "1.nl.pool.ntp.org"
+  - "2.nl.pool.ntp.org"
+  - "3.nl.pool.ntp.org"
+
+http_proxy: "http://10.0.0.206:3128"
+https_proxy: "http://10.0.0.206:3128"
