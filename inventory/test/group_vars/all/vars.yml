@@ -1,0 +1,9 @@
+---
+
+calico_version: "v3.28.0"
+calico_cni_version: "v3.28.0"
+container_manager: containerd
+containerd_version: "containerd.io-1.6.31"
+docker_version: "docker-ce-26.1.0"
+etcd_version: "3.5.12-0"
+kube_version: "1.28.9"
