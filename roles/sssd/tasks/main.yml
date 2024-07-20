@@ -1,0 +1,12 @@
+---
+# https://access.redhat.com/solutions/7031304
+- name: Fix sssd database
+  ansible.builtin.copy:
+    src: sssd.conf
+    dest: /etc/sssd/
+    mode: "0600"
+
+- name: Restart ssshd
+  ansible.builtin.systemd:
+    name: sssd
+    state: restarted
