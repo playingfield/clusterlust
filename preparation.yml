@@ -1,0 +1,22 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Disable firewall
+  hosts: all
+  become: true
+  gather_facts: false
+  pre_tasks:
+    - name: Disable firewalld
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+        enabled: false
+
+- name: Etcd
+  hosts: etcd
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Fix sssd database
+      ansible.builtin.include_role:
+        name: sssd
+

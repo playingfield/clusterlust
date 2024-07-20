@@ -1,17 +1,5 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Jumphost config
-  hosts: jumphost
-  become: true
-  gather_facts:
-  tasks:
-    - name: Configure OpenSSH
-      ansible.builtin.include_role:
-        name: openssh
-      vars:
-        allow_tcp_forwarding: 'yes'
-        crypto_policy: 'FIPS:OSPP'
-
 - name: Common
   hosts: all:!localhost:!jumphost
   become: true

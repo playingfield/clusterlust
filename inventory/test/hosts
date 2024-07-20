@@ -1,0 +1,40 @@
+[all]
+k8s-master01 ansible_host=10.0.0.231 ip=10.0.0.231 etcd_member_name=etcd1
+k8s-master02 ansible_host=10.0.0.232 ip=10.0.0.232 etcd_member_name=etcd2
+k8s-master03 ansible_host=10.0.0.233 ip=10.0.0.233 etcd_member_name=etcd3
+k8s-node01 ansible_host=10.0.0.209
+k8s-node02 ansible_host=10.0.0.210
+k8s-node03 ansible_host=10.0.0.212
+k8s-node04 ansible_host=10.0.0.213
+k8s-node05 ansible_host=10.0.0.214
+k8s-node06 ansible_host=10.0.0.215
+
+[kube_control_plane]
+k8s-master01
+k8s-master02
+k8s-master03
+
+[etcd]
+k8s-master01
+k8s-master02
+k8s-master03
+
+[kube_node]
+k8s-node01
+k8s-node02
+k8s-node03
+k8s-node04
+k8s-node05
+k8s-node06
+
+[all:vars]
+
+[calico_rr]
+
+[k8s_cluster:children]
+kube_control_plane
+kube_node
+calico_rr
+
+[k8s_cluster:vars]
+etcd_deployment_type=kubeadm
