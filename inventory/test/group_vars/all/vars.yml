@@ -1,4 +1,5 @@
 ---
+argocd_enabled: true
 calico_version: "v3.27.3"
 cluster_name: test
 container_manager: containerd  # default
@@ -14,7 +15,7 @@ helm_enabled: true
 helm_version: "v3.13.3"
 kube_version: "v1.28.9"
 kube_pods_subnet: "192.168.0.0/16"
-
+metallb_enabled: true
 ntp_enabled: true
 ntp_timezone: Europe/Amsterdam
 ntp_manage_config: true
