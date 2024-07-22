@@ -1,0 +1,23 @@
+
+#!/usr/bin/env ansible-playbook
+---
+- name: Install Argo-CD
+  hosts: kube_control_plane
+  become: false
+  gather_facts: false
+
+  tasks:
+    - name: Add Argo chart repository
+      run_once: true
+      kubernetes.core.helm_repository:
+        name: argo
+        repo_url: https://argoproj.github.io/argo-helm/
+    
+    - name: Install Argo-CD with Helm
+      run_once: true
+      kubernetes.core.helm:
+        name: argo
+        chart_ref: argo/argo-cd
+        release_namespace: argocd
+        create_namespace: true
+    
