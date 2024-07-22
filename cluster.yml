@@ -35,3 +35,4 @@
   become: true
   ansible.builtin.import_playbook: kubernetes_sigs.kubespray.cluster
   tags: kubernetes
+
