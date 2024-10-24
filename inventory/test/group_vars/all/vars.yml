@@ -5,7 +5,6 @@ container_manager: containerd  # default
 containerd_version: "1.6.31"
 dns_mode: coredns
 upstream_dns_servers:
-  - 10.0.0.205
   - 168.63.129.16
 docker_version: "docker-ce-26.1.0"
 etcd_version: "v3.5.12"
