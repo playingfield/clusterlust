@@ -1,31 +1,27 @@
 [all]
-k8s-master01 ansible_host=10.0.0.231 ip=10.0.0.231 etcd_member_name=etcd1
-k8s-master02 ansible_host=10.0.0.232 ip=10.0.0.232 etcd_member_name=etcd2
-k8s-master03 ansible_host=10.0.0.233 ip=10.0.0.233 etcd_member_name=etcd3
-k8s-node01 ansible_host=10.0.0.209
-k8s-node02 ansible_host=10.0.0.210
-k8s-node03 ansible_host=10.0.0.212
-k8s-node04 ansible_host=10.0.0.213
-k8s-node05 ansible_host=10.0.0.214
-k8s-node06 ansible_host=10.0.0.215
+dz-k8s-m01-vm ansible_host=10.0.0.231 ip=10.0.0.231
+dz-k8s-w01-vm ansible_host=10.0.0.209 etcd_member_name=etcd1
+dz-k8s-w02-vm ansible_host=10.0.0.210 etcd_member_name=etcd2
+dz-k8s-w03-vm ansible_host=10.0.0.212 etcd_member_name=etcd3
+dz-k8s-w04-vm ansible_host=10.0.0.213
+dz-k8s-w05-vm ansible_host=10.0.0.214
+dz-k8s-w06-vm ansible_host=10.0.0.215
 
 [kube_control_plane]
-k8s-master01
-k8s-master02
-k8s-master03
+dz-k8s-m01-vm
 
 [etcd]
-k8s-master01
-k8s-master02
-k8s-master03
+dz-k8s-w01-vm
+dz-k8s-w02-vm
+dz-k8s-w03-vm
 
 [kube_node]
-k8s-node01
-k8s-node02
-k8s-node03
-k8s-node04
-k8s-node05
-k8s-node06
+dz-k8s-w01-vm
+dz-k8s-w02-vm
+dz-k8s-w03-vm
+dz-k8s-w04-vm
+dz-k8s-w05-vm
+dz-k8s-w06-vm
 
 [all:vars]
 
