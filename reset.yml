@@ -1,0 +1,35 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Common tasks for every playbooks
+  import_playbook: boilerplate.yml
+
+- name: Reset cluster
+  hosts: etcd:k8s_cluster:calico_rr
+  gather_facts: true
+  collections:
+    - kubernetes_sigs.kubespray
+  pre_tasks:
+    - name: Reset Confirmation
+      pause:
+        prompt: "Are you sure you want to reset cluster state? Type 'yes' to reset your cluster."
+      register: reset_confirmation_prompt
+      run_once: true
+      when:
+        - not (skip_confirmation | default(false) | bool)
+        - reset_confirmation is not defined
+
+    - name: Check confirmation
+      fail:
+        msg: "Reset confirmation failed"
+      when:
+        - not reset_confirmation | default(false) | bool
+        - not reset_confirmation_prompt.user_input | default("") == "yes"
+
+    - name: Gather information about installed services
+      service_facts:
+
+  tasks:
+    - ansible.builtin.include_role:
+        name: kubespray-defaults
+    - ansible.builtin.include_role:
+        name: reset
