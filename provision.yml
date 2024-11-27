@@ -10,6 +10,9 @@
         name: "{{ inventory_hostname }}"
 
     - name: Clone the collection
+      delegate_to: localhost
+      connection: local
+      become: false
       ansible.builtin.git:
         repo: https://github.com/kubernetes-sigs/kubespray.git
         version: v2.26.0
