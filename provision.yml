@@ -16,9 +16,9 @@
       ansible.builtin.git:
         repo: https://github.com/kubernetes-sigs/kubespray.git
         version: v2.26.0
-        dest: "~/tmp/kubernetes_sigs.kubespray"
+        dest: "/tmp/kubernetes_sigs.kubespray"
 
 - name: Install Kubernetes
   become: true
-  ansible.builtin.import_playbook: ~/tmp/kubernetes_sigs.kubespray.cluster
+  ansible.builtin.import_playbook: /tmp/kubernetes_sigs.kubespray.cluster
   tags: kubernetes
