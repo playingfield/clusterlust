@@ -33,5 +33,6 @@
 
 - name: Install Kubernetes
   become: true
+  collections: kubernetes_sigs.kubespray
   ansible.builtin.import_playbook: kubernetes_sigs.kubespray.cluster
   tags: kubernetes
