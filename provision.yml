@@ -4,6 +4,7 @@
   hosts: all:!localhost:!jumphost
   become: true
   gather_facts: false
+  collections: kubernetes_sigs.kubespray
   pre_tasks:
     - name: Set hostname
       ansible.builtin.hostname:
@@ -33,6 +34,5 @@
 
 - name: Install Kubernetes
   become: true
-  collections: kubernetes_sigs.kubespray
   ansible.builtin.import_playbook: kubernetes_sigs.kubespray.cluster
   tags: kubernetes
