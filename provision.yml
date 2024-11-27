@@ -4,33 +4,16 @@
   hosts: all:!localhost:!jumphost
   become: true
   gather_facts: false
-  collections: kubernetes_sigs.kubespray
   pre_tasks:
     - name: Set hostname
       ansible.builtin.hostname:
         name: "{{ inventory_hostname }}"
 
-    - name: Ensure ansible and facts.d directories exist
-      ansible.builtin.file:
-        path: "{{ item.path }}"
-        mode: "{{ item.mode }}"
-        state: directory
-      loop:
-        - {path: '/etc/ansible', mode: '755'}
-        - {path: '/etc/ansible/facts.d', mode: '750'}
-
-    - name: Gather date_time  # noqa: run-once[task]
-      run_once: true
-      ansible.builtin.setup:
-        gather_subset: date_time
-
-    - name: Set local fact last_run
-      ansible.builtin.copy:
-        content: '{"date_time": "{{ ansible_facts.date_time.iso8601 }}"}'
-        dest: /etc/ansible/facts.d/last_run.fact
-        mode: '0640'
-      register: install_fact
-
+    - name: Clone the collection
+      ansible.builtin.git:
+        repo: https://github.com/kubernetes-sigs/kubespray.git
+        version: v2.26.0
+        dest: kubernetes_sigs.kubespray
 
 - name: Install Kubernetes
   become: true
