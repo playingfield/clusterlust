@@ -1,40 +1,7 @@
 #!/usr/bin/env ansible-playbook
-# First run "./ssh-copy-id.yml -i jumphost, -k"
 # Then ./ssh-copy-id.yml -i $ANSIBLE_INVENTORY -k
 ---
 # Create an ssh-key for jumphost, and another for the rest
-
-- name: Distribute public ssh-key to jumphost
-  hosts: jumphost
-  become: false
-  gather_facts: false
-
-  tasks:
-    - name: Get home_dir from $HOME
-      delegate_to: localhost
-      run_once: true
-      ansible.builtin.set_fact:
-        home_dir: "{{ lookup('env', 'HOME') }}"
-
-    - name: Selecting first public key file
-      delegate_to: localhost
-      run_once: true
-      ansible.builtin.set_fact:
-        pub_key: "{{ item }}"
-      with_first_found:
-        - "{{ home_dir }}/.ssh/first.pub"
-        - "{{ home_dir }}/.ssh/id_rsa.pub"
-
-    - name: Gather facts
-      ansible.builtin.setup:
-        filter: ansible_env
-
-    - name: Add authorized key taken from file
-      ansible.posix.authorized_key:
-        user: "{{ ansible_env['USER'] }}"
-        state: present
-        key: "{{ lookup('file', pub_key) }}"
-        exclusive: true
 
 - name: Distribute public ssh-key to ansible inventory
   hosts: all:!localhost:!jumphost
@@ -48,22 +15,22 @@
       ansible.builtin.set_fact:
         home_dir: "{{ lookup('env', 'HOME') }}"
 
-    - name: Selecting second public key file
+    - name: Selecting public key file
       delegate_to: localhost
       run_once: true
       ansible.builtin.set_fact:
         pub_key: "{{ item }}"
       with_first_found:
-        - "{{ home_dir }}/.ssh/second.pub"
-        - "{{ home_dir }}/.ssh/id_rsa.pub"
+        - "{{ home_dir }}/.ssh/first.pub"
+        - "{{ home_dir }}/.ssh/id_ed25519.pub"
 
     - name: Gather facts
       ansible.builtin.setup:
         filter: ansible_env
 
-    - name: Add authorized key taken from file
+    - name: Add authorized keys taken from file
       ansible.posix.authorized_key:
         user: "{{ ansible_env['USER'] }}"
         state: present
         key: "{{ lookup('file', pub_key) }}"
-        exclusive: true
+        exclusive: false
