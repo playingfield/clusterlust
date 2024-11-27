@@ -9,14 +9,14 @@
       ansible.builtin.hostname:
         name: "{{ inventory_hostname }}"
 
-    - name: Clone the collection
-      delegate_to: localhost
-      connection: local
-      become: false
-      ansible.builtin.git:
-        repo: https://github.com/kubernetes-sigs/kubespray.git
-        version: v2.26.0
-        dest: "/tmp/kubernetes_sigs.kubespray"
+#   - name: Clone the collection
+#     delegate_to: localhost
+#     connection: local
+#     become: false
+#     ansible.builtin.git:
+#       repo: https://github.com/kubernetes-sigs/kubespray.git
+#       version: v2.26.0
+#       dest: "/usr/share/ansible/collections/ansible_collection/kubernetes_sigs/kubespray"
 
 - name: Install Kubernetes
   become: true
