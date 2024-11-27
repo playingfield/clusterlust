@@ -1,0 +1,5 @@
+#!/bin/bash
+deactivate
+rm -rf CI
+rm -rf ~/.ansible/colllections/ansible_collections/kubernetes*
+rm -rf ~/.ansible/colllections/ansible_collections/community*
