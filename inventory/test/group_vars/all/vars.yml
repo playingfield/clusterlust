@@ -1,4 +1,5 @@
 ---
+artifacts_dir: "{{ playbook_dir }}/files"
 bin_dir: /usr/bin
 enable_dual_stack_networks: false
 calico_version: "v3.27.3"
@@ -16,6 +17,8 @@ kube_version: "v1.31.1"
 kube_pods_subnet: "192.168.0.0/16"
 kube_network_plugin: calico
 kube_proxy_mode: iptables
+kubectl_localhost: true
+kubeconfig_localhost: true
 ntp_enabled: true
 ntp_timezone: Europe/Amsterdam
 ntp_manage_config: true
