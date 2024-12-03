@@ -1,19 +1,21 @@
 ---
 artifacts_dir: "{{ playbook_dir }}/files"
 bin_dir: /usr/bin
-enable_dual_stack_networks: false
+download_run_once: true
+download_localhost: true
 calico_version: "v3.27.3"
 cluster_name: test
 container_manager: containerd  # default
 containerd_bin_dir: /usr/bin
 containerd_version: "1.6.32"
 dns_mode: coredns
+enable_dual_stack_networks: false
 upstream_dns_servers:
   - 168.63.129.16
 docker_version: "docker-ce-26.1.0"
 etcd_version: "v3.5.12"
 etcd_deployment_type: host
-kube_version: "v1.31.1"
+kube_version: "v1.31.0"
 kube_pods_subnet: "192.168.0.0/16"
 kube_network_plugin: calico
 kube_proxy_mode: iptables
