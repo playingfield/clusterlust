@@ -1,9 +1,5 @@
 ---
 collections:
-   - name: ansible.posix
-   - name: community.crypto
-   - name: community.general
-   - name: kubernetes.core
    - name: https://github.com/kubernetes-sigs/kubespray.git
      type: git
      version: v2.26.0
