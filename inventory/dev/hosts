@@ -10,6 +10,14 @@ worker12 ansible_host=192.168.56.12
 [bastion]
 controller
 
+[k8s_cluster:children]
+kube_control_plane
+kube_node
+calico_rr
+
+# https://kubespray.io/#/docs/CNI/calico
+[calico_rr]
+
 [kube_control_plane]
 control01
 control02
@@ -22,8 +30,8 @@ control03
 
 [kube_node]
 worker01
-worker02
-worker03
+;worker02
+;worker03
 
 [all:vars]
 ansible_user=vagrant

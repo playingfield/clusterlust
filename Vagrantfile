@@ -59,8 +59,7 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "provision.yml"
     ansible.compatibility_mode = "2.0"
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
-    ansible.galaxy_role_file = "roles/requirements.yml"
     ansible.verbose = ""
-    #ansible.limit = "all" # or only "nodes" group, etc.
+    ansible.limit = "k8s_cluster" # or only "nodes" group, etc.
   end
 end
