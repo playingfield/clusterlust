@@ -1,5 +1,5 @@
 ---
-
+argocd_enabled: true
 artifacts_dir: "{{ playbook_dir }}/files"
 bin_dir: /usr/bin
 calico_version: "v3.27.3"
