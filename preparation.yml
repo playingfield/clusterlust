@@ -1,5 +1,25 @@
 #!/usr/bin/env ansible-playbook
 ---
+- name: Prepare bastion host
+  hosts: bastion
+  become: true
+
+  tasks:
+    - name: Install Kubectl
+      when: (use_krew | bool or use_kubectl | bool)
+      ansible.builtin.include_role:
+        name: andrewrothstein.kubectl
+
+    - name: Install Krew
+      when: use_krew | bool
+      ansible.builtin.include_role:
+        name: andrewrothstein.krew
+
+    - name: Install Helm
+      when: use_helm | bool
+      ansible.builtin.include_role:
+        name: andrewrothstein.kubernetes_helm
+
 - name: Disable firewall
   hosts: k8s_cluster
   become: true
