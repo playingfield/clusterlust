@@ -13,6 +13,11 @@
     - name: Install Krew
       when: use_krew | bool
       ansible.builtin.include_role:
+        name: andrewrothstein.unarchive-deps
+
+    - name: Install Krew
+      when: use_krew | bool
+      ansible.builtin.include_role:
         name: andrewrothstein.krew
 
     - name: Install Helm
