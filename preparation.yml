@@ -1,20 +1,5 @@
-#!/usr/bin/env ansible-playbook ---
-- name: Prepare bastion host
-  hosts: bastion
-  become: true
-  gather_facts: true
-  vars:
-    helm_enabled: true
-    krew_enabled: true
-  tasks:
-    - name: Install Helm
-      ansible.builtin.include_role:
-        name: kubernetes_sigs.kubespray.kubernetes-apps.helm
-
-    - name: Install Krew
-      ansible.builtin.include_role:
-        name: kubernetes_sigs.kubespray.kubernetes-apps.helm
-
+#!/usr/bin/env ansible-playbook
+---
 
 - name: Disable firewall
   hosts: k8s_cluster
