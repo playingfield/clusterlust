@@ -2,6 +2,7 @@
 ---
 - name: Prepare bastion host
   hosts: bastion
+  become: true
   gather_facts: true
   tasks:
     - name: Install Krew
