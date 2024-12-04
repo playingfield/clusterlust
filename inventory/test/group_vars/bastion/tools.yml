@@ -7,3 +7,7 @@ krew_install_plugins:
   - ctx
   - ns
   - stern
+
+use_helm: true
+use_krew: true
+use_kubectl: true
