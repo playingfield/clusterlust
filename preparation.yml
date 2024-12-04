@@ -1,17 +1,19 @@
-#!/usr/bin/env ansible-playbook
----
+#!/usr/bin/env ansible-playbook ---
 - name: Prepare bastion host
   hosts: bastion
   become: true
   gather_facts: true
+  vars:
+    helm_enabled: true
+    krew_enabled: true
   tasks:
     - name: Install Helm
       ansible.builtin.include_role:
-        name: andrewrothstein.kubernetes_helm
+        name: kubernetes_sigs.kubespray.kubernetes-apps.helm
 
     - name: Install Krew
       ansible.builtin.include_role:
-        name: andrewrothstein.krew
+        name: kubernetes_sigs.kubespray.kubernetes-apps.helm
 
 
 - name: Disable firewall
@@ -36,12 +38,3 @@
           line: "proxy={{ http_proxy |default('') }}"
         - regexp: '^repo_gpgcheck='
           line: 'repo_gpgcheck=0'
-
-- name: Etcd
-  hosts: etcd
-  become: true
-  gather_facts: false
-  tasks:
-    - name: Fix sssd database
-      ansible.builtin.include_role:
-        name: sssd
