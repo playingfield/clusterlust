@@ -5,18 +5,11 @@
   become: true
   gather_facts: true
   tasks:
-    - name: Install Kubectl
-      when: (use_krew | bool or use_kubectl | bool)
-      ansible.builtin.include_role:
-        name: andrewrothstein.kubectl
-
     - name: Install Krew
-      when: use_krew | bool
       ansible.builtin.include_role:
         name: andrewrothstein.krew
 
     - name: Install Helm
-      when: use_helm | bool
       ansible.builtin.include_role:
         name: andrewrothstein.kubernetes_helm
 
