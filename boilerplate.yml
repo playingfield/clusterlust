@@ -26,4 +26,3 @@
       group_by:
         key: "{{ (group_names | intersect(item.value) | length > 0) | ternary(item.key, '_all') }}"
       loop: "{{ group_mappings | dict2items }}"
-

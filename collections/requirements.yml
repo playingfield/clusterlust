@@ -1,6 +1,5 @@
 ---
 collections:
-   - name: https://github.com/kubernetes-sigs/kubespray.git
-     type: git
-     version: v2.25.1
-
+  - name: https://github.com/kubernetes-sigs/kubespray.git
+    type: git
+    version: v2.25.1
