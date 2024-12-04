@@ -1,5 +1,6 @@
 ---
 collections:
+  - name: ansible.posix
   - name: https://github.com/kubernetes-sigs/kubespray.git
     type: git
     version: v2.25.1
