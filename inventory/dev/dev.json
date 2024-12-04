@@ -1,7 +1,7 @@
 [
     {
         "name": "controller",
-        "autostart": true,
+        "autostart": false,
         "cpus": 8,
         "distro": "almalinux",
         "family": "RedHat",
@@ -10,7 +10,7 @@
         "ip_addr": "192.168.56.3",
         "memory": "16384",
         "no_share": true,
-        "primary": true
+        "primary": false
     },
     {
         "name": "control01",
@@ -23,13 +23,13 @@
         "ip_addr": "192.168.56.4",
         "memory": "8192",
         "no_share": true,
-        "primary": false,
+        "primary": true,
         "app_port": "22",
         "forwarded_port": "2204"
     },
     {
         "name": "control02",
-        "autostart": false,
+        "autostart": true,
         "cpus": 2,
         "distro": "almalinux",
         "family": "RedHat",
@@ -44,7 +44,7 @@
     },
     {
         "name": "control03",
-        "autostart": false,
+        "autostart": true,
         "cpus": 2,
         "distro": "almalinux",
         "family": "RedHat",

@@ -4,11 +4,8 @@ kubectl_ver: v1.29.3
 kubectl_install_dir: /usr/bin
 kubernetes_helm_ver: v3.16.3
 
+# TODO: PR on Kubespray to install
 krew_install_plugins:
   - ctx
   - ns
   - stern
-
-use_helm: true
-use_krew: true
-use_kubectl: true

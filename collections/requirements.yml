@@ -1,6 +1,7 @@
 ---
 collections:
-  - name: community.windows  # transitive dependency of andrewrothstein.krew
+  - name: ansible.posix
+  - name: kubernetes.core
   - name: https://github.com/kubernetes-sigs/kubespray.git
     type: git
     version: v2.25.1

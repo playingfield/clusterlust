@@ -47,7 +47,8 @@ Vagrant.configure(2) do |config|
            "--cpus", guest['cpus'],
            "--memory", guest['memory'],
            "--graphicscontroller", "VMSVGA",
-           "--vram", "64"
+           "--vram", "64",
+           "--cableconnected1", "on"
         ]
         virtualbox.gui = guest['gui']
         virtualbox.name = guest['name']
@@ -59,8 +60,7 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "provision.yml"
     ansible.compatibility_mode = "2.0"
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
-    ansible.galaxy_role_file = "roles/requirements.yml"
     ansible.verbose = ""
-    #ansible.limit = "all" # or only "nodes" group, etc.
+    ansible.limit = "k8s_cluster" # or only "nodes" group, etc.
   end
 end
