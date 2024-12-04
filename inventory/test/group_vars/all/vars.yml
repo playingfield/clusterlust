@@ -1,0 +1,8 @@
+---
+krew_parent_install_dir: /usr
+# andrewrothstein.krew needs update
+kubectl_mirror: https://dl.k8s.io/release
+kubectl_checksums:
+  v1.29.3:
+    linux:
+      amd64: sha256:89c0435cec75278f84b62b848b8c0d3e15897d6947b6c59a49ddccd93d7312bf
