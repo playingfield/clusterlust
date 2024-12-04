@@ -1,29 +1,29 @@
 [all]
-jumphost ansible_host=192.168.56.10
-k8s-master01 ansible_host=192.168.56.33 ip=192.168.56.33 etcd_member_name=etcd1
-k8s-master02 ansible_host=192.168.56.34 ip=192.168.56.34 etcd_member_name=etcd2
-k8s-master03 ansible_host=192.168.56.35 ip=192.168.56.35 etcd_member_name=etcd3
-k8s-node01 ansible_host=192.168.56.40
-k8s-node02 ansible_host=192.168.56.41
-k8s-node03 ansible_host=192.168.56.42
+controller ansible_host=192.168.56.3
+control01 ansible_host=192.168.56.04 ip=192.168.56.33 etcd_member_name=etcd1
+control02 ansible_host=192.168.56.05 ip=192.168.56.34 etcd_member_name=etcd2
+control03 ansible_host=192.168.56.06 ip=192.168.56.35 etcd_member_name=etcd3
+worker10 ansible_host=192.168.56.10
+worker11 ansible_host=192.168.56.11
+worker12 ansible_host=192.168.56.12
 
 [bastion]
-jumphost
+controller
 
 [kube_control_plane]
-k8s-master01
-k8s-master02
-k8s-master03
+control01
+control02
+control03
 
 [etcd]
-k8s-master01
-k8s-master02
-k8s-master03
+control01
+control02
+control03
 
 [kube_node]
-k8s-node01
-k8s-node02
-k8s-node03
+worker01
+worker02
+worker03
 
 [all:vars]
 ansible_user=vagrant
@@ -37,5 +37,5 @@ kube_node
 calico_rr
 
 [k8s_cluster:vars]
-ansible_ssh_common_args='-J vagrant@192.168.56.10"'
+ansible_ssh_common_args='-J vagrant@192.168.56.3"'
 etcd_deployment_type=kubeadm
