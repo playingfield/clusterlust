@@ -1,5 +1,9 @@
 ---
 # https://github.com/andrewrothstein
 roles:
-  - src: andrewrothstein.krew
+  - src: https://github.com/andrewrothstein/ansible-krew.git
+    name: andrewrothstein.krew
+    scm: git
+    version: v1.1.1
   - src: andrewrothstein.kubernetes_helm
+    version: 3.0.17
