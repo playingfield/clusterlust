@@ -3,7 +3,7 @@
 - name: Prepare bastion host
   hosts: bastion
   become: true
-
+  gather_facts: true
   tasks:
     - name: Install Kubectl
       when: (use_krew | bool or use_kubectl | bool)
