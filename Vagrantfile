@@ -47,7 +47,8 @@ Vagrant.configure(2) do |config|
            "--cpus", guest['cpus'],
            "--memory", guest['memory'],
            "--graphicscontroller", "VMSVGA",
-           "--vram", "64"
+           "--vram", "64",
+           "--cableconnected1", "on"
         ]
         virtualbox.gui = guest['gui']
         virtualbox.name = guest['name']
