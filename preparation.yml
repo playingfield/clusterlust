@@ -20,6 +20,6 @@
         state: present
       loop:
         - regexp: '^proxy='
-          line: "proxy={{ http_proxy |default('') }}"
+          line: "proxy={{ http_proxy | default('') }}"
         - regexp: '^repo_gpgcheck='
           line: 'repo_gpgcheck=0'
