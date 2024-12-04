@@ -1,8 +1,6 @@
 ---
 # https://github.com/andrewrothstein
 roles:
-  - src: andrewrothstein.git
-  - src: andrewrothstein.unarchivedeps
   - src: andrewrothstein.kubectl
   - src: andrewrothstein.krew
   - src: andrewrothstein.kubernetes_helm
