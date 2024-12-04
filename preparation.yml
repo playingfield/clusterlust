@@ -5,13 +5,14 @@
   become: true
   gather_facts: true
   tasks:
+    - name: Install Helm
+      ansible.builtin.include_role:
+        name: andrewrothstein.kubernetes_helm
+
     - name: Install Krew
       ansible.builtin.include_role:
         name: andrewrothstein.krew
 
-    - name: Install Helm
-      ansible.builtin.include_role:
-        name: andrewrothstein.kubernetes_helm
 
 - name: Disable firewall
   hosts: k8s_cluster
