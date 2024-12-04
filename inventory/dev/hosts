@@ -1,8 +1,8 @@
 [all]
 controller ansible_host=192.168.56.3
-control01 ansible_host=192.168.56.04 ip=192.168.56.33 etcd_member_name=etcd1
-control02 ansible_host=192.168.56.05 ip=192.168.56.34 etcd_member_name=etcd2
-control03 ansible_host=192.168.56.06 ip=192.168.56.35 etcd_member_name=etcd3
+control01 ansible_host=192.168.56.04 etcd_member_name=etcd1
+control02 ansible_host=192.168.56.05 etcd_member_name=etcd2
+control03 ansible_host=192.168.56.06 etcd_member_name=etcd3
 worker10 ansible_host=192.168.56.10
 worker11 ansible_host=192.168.56.11
 worker12 ansible_host=192.168.56.12
