@@ -61,6 +61,6 @@ Vagrant.configure(2) do |config|
     ansible.compatibility_mode = "2.0"
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
     ansible.verbose = ""
-    ansible.limit = "k8s_cluster" # or only "nodes" group, etc.
+    ansible.limit = "all" # or only "nodes" group, etc.
   end
 end
