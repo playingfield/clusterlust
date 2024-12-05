@@ -10,7 +10,7 @@ provision:
 .PHONY: clean
 clean:
 	vagrant destroy -f
-	rm -rf roles/openssh
+	rm -rf galaxy_roles/*
 
 .PHONY: all
 all: up provision
