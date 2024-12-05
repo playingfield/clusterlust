@@ -1,11 +1,7 @@
 [all]
 controller ansible_host=192.168.56.3
 control01 ansible_host=192.168.56.04 etcd_member_name=etcd1
-control02 ansible_host=192.168.56.05 etcd_member_name=etcd2
-control03 ansible_host=192.168.56.06 etcd_member_name=etcd3
 worker10 ansible_host=192.168.56.10
-worker11 ansible_host=192.168.56.11
-worker12 ansible_host=192.168.56.12
 
 [bastion]
 controller
@@ -19,18 +15,12 @@ calico_rr
 
 [kube_control_plane]
 control01
-control02
-control03
 
 [etcd]
 control01
-control02
-control03
 
 [kube_node]
 worker10
-worker11
-worker12
 
 [all:vars]
 ansible_user=vagrant
