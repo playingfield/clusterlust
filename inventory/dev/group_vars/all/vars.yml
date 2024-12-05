@@ -16,6 +16,9 @@ docker_version: "docker-ce-26.1.0"
 etcd_version: "v3.5.12"
 etcd_deployment_type: host
 krew_enabled: true
+kube_config_dir: /etc/kubernetes
+kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"
+kube_manifest_dir: "{{ kube_config_dir }}/manifests"
 kube_pods_subnet: "192.168.0.0/16"
 kube_network_plugin: calico
 kube_proxy_mode: iptables
