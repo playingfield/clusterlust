@@ -57,7 +57,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "provision.yml"
+    ansible.playbook = "preparation.yml"
     ansible.compatibility_mode = "2.0"
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
     ansible.verbose = ""
