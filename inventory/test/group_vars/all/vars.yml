@@ -17,7 +17,6 @@ docker_version: "docker-ce-26.1.0"
 etcd_version: "v3.5.12"
 etcd_deployment_type: host
 helm_enabled: true
-helm_version: "v3.16.0"
 krew_enabled: true
 kube_pods_subnet: "192.168.0.0/16"
 kube_network_plugin: calico
