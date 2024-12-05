@@ -8,6 +8,8 @@ container_manager: containerd  # default
 containerd_bin_dir: /usr/bin
 containerd_version: "1.6.32"
 dns_mode: coredns
+download_run_once: false
+download_localhost: false
 enable_dual_stack_networks: false
 upstream_dns_servers:
   - 168.63.129.16
@@ -15,6 +17,7 @@ docker_version: "docker-ce-26.1.0"
 etcd_version: "v3.5.12"
 etcd_deployment_type: host
 helm_enabled: true
+helm_version: "v3.16.0"
 krew_enabled: true
 kube_pods_subnet: "192.168.0.0/16"
 kube_network_plugin: calico
