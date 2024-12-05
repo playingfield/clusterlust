@@ -1,7 +1,7 @@
 [all]
 ## Configure 'ip' variable to bind kubernetes services on a
 ## different ip than the default iface
-dz-k8s-m01-vm ansible_host=10.0.0.231 ip=10.0.0.231
+dz-k8s-m01-vm ansible_host=10.0.0.231
 dz-k8s-w01-vm ansible_host=10.0.0.209 etcd_member_name=etcd1
 dz-k8s-w02-vm ansible_host=10.0.0.210 etcd_member_name=etcd2
 dz-k8s-w03-vm ansible_host=10.0.0.212 etcd_member_name=etcd3
