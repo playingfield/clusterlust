@@ -1,7 +1,7 @@
 #!/usr/bin/env ansible-playbook
 ---
 - name: Common
-  hosts: all:!localhost:!jumphost
+  hosts: all:!localhost:!bastion
   become: true
   gather_facts: false
   pre_tasks:
