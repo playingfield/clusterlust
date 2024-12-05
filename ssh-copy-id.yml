@@ -1,10 +1,9 @@
 #!/usr/bin/env ansible-playbook
 # Then ./ssh-copy-id.yml -i $ANSIBLE_INVENTORY -k
 ---
-# Create an ssh-key for jumphost, and another for the rest
 
 - name: Distribute public ssh-key to ansible inventory
-  hosts: all:!localhost:!jumphost
+  hosts: all:!localhost:!bastion
   become: false
   gather_facts: false
 
