@@ -1,7 +1,7 @@
 .PHONY: up
 up:
 	vagrant up --no-provision
-	vagrant provision jumphost
+	vagrant provision
 
 .PHONY: provision
 provision:
