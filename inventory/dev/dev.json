@@ -28,36 +28,6 @@
         "forwarded_port": "2204"
     },
     {
-        "name": "control02",
-        "autostart": true,
-        "cpus": 2,
-        "distro": "almalinux",
-        "family": "RedHat",
-        "gui": false,
-        "box": "bento/almalinux-8.10",
-        "ip_addr": "192.168.56.5",
-        "memory": "8192",
-        "no_share": true,
-        "primary": false,
-        "app_port": "22",
-        "forwarded_port": "2205"
-    },
-    {
-        "name": "control03",
-        "autostart": true,
-        "cpus": 2,
-        "distro": "almalinux",
-        "family": "RedHat",
-        "gui": false,
-        "box": "bento/almalinux-8.10",
-        "ip_addr": "192.168.56.6",
-        "memory": "8192",
-        "no_share": true,
-        "primary": false,
-        "app_port": "22",
-        "forwarded_port": "2206"
-    },
-    {
         "name": "worker10",
         "autostart": true,
         "cpus": 2,
@@ -71,35 +41,5 @@
         "primary": false,
         "app_port": "22",
         "forwarded_port": "2210"
-    },
-    {
-        "name": "worker11",
-        "autostart": false,
-        "cpus": 2,
-        "distro": "almalinux",
-        "family": "RedHat",
-        "gui": false,
-        "box": "bento/almalinux-8.10",
-        "ip_addr": "192.168.56.11",
-        "memory": "8192",
-        "no_share": true,
-        "primary": false,
-        "app_port": "22",
-        "forwarded_port": "2211"
-    },
-    {
-        "name": "worker12",
-        "autostart": false,
-        "cpus": 2,
-        "distro": "almalinux",
-        "family": "RedHat",
-        "gui": false,
-        "box": "bento/almalinux-8.10",
-        "ip_addr": "192.168.56.12",
-        "memory": "8192",
-        "no_share": true,
-        "primary": false,
-        "app_port": "22",
-        "forwarded_port": "2212"
     }
 ]
