@@ -1,32 +1,30 @@
 [all]
 ## Configure 'ip' variable to bind kubernetes services on a
 ## different ip than the default iface
-dz-k8s-m01-vm ansible_host=10.0.0.231
-dz-k8s-w01-vm ansible_host=10.0.0.209 etcd_member_name=etcd1
-dz-k8s-w02-vm ansible_host=10.0.0.210 etcd_member_name=etcd2
-dz-k8s-w03-vm ansible_host=10.0.0.212 etcd_member_name=etcd3
-dz-k8s-w04-vm ansible_host=10.0.0.213
-dz-k8s-w05-vm ansible_host=10.0.0.214
-dz-k8s-w06-vm ansible_host=10.0.0.215
+node01 ansible_host=10.0.0.209 etcd_member_name=etcd1
+node02 ansible_host=10.0.0.210 etcd_member_name=etcd2
+node03 ansible_host=10.0.0.212 etcd_member_name=etcd3
+node04 ansible_host=10.0.0.213
+node05 ansible_host=10.0.0.214
+node06 ansible_host=10.0.0.215
 
 #  list of servers where kubernetes control plane components (apiserver, scheduler, controller) will run.
 [kube_control_plane]
-dz-k8s-m01-vm
+node01
+node02
+node03
 
 # list of servers to compose the etcd server. You should have at least 3 servers for failover purpose.
 [etcd]
-dz-k8s-w01-vm
-dz-k8s-w02-vm
-dz-k8s-w03-vm
+node01
+node02
+node03
 
 # list of kubernetes nodes where the pods will run.
 [kube_node]
-dz-k8s-w01-vm
-dz-k8s-w02-vm
-dz-k8s-w03-vm
-dz-k8s-w04-vm
-dz-k8s-w05-vm
-dz-k8s-w06-vm
+node04
+node05
+node06
 
 [all:vars]
 
