@@ -12,9 +12,9 @@
       vars:
         group_mappings:
           kube_control_plane:
-            - kube-master
+            - k8s_masters
           kube_node:
-            - kube-node
+            - k8s_nodes
           calico_rr:
             - calico-rr
           no_floating:
