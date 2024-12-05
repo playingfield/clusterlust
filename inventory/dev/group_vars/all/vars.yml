@@ -2,7 +2,6 @@
 argocd_enabled: true
 artifacts_dir: "{{ playbook_dir }}/files"
 bin_dir: /usr/bin
-calico_version: "v3.27.3"
 cluster_name: test
 container_manager: containerd  # default
 containerd_bin_dir: /usr/bin
@@ -20,7 +19,7 @@ kube_config_dir: /etc/kubernetes
 kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"
 kube_manifest_dir: "{{ kube_config_dir }}/manifests"
 kube_pods_subnet: "192.168.0.0/16"
-kube_network_plugin: calico
+kube_network_plugin: flannel
 kube_proxy_mode: iptables
 kubectl_localhost: true
 kubeconfig_localhost: true
