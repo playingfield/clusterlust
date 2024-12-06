@@ -24,8 +24,8 @@
         "memory": "8192",
         "no_share": true,
         "primary": true,
-        "app_port": "22",
-        "forwarded_port": "2204"
+        "app_port": "6443",
+        "forwarded_port": "6443"
     },
     {
         "name": "worker10",
