@@ -1,6 +1,21 @@
 #!/usr/bin/env ansible-playbook
 ---
 
+- name: Common
+  hosts: bastion
+  become: true
+  vars:
+    docker_add_repo: true
+  tasks:
+
+    - name: Install docker-ce
+      ansible.builtin.import_role:
+        name: geerlingguy.docker
+
+    - name: Install Squid proxy
+      ansible.builtin.import_role:
+        name: proxy
+
 - name: Disable firewall
   hosts: k8s_cluster
   become: true
