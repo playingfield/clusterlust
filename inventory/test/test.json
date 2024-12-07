@@ -8,7 +8,7 @@
         "gui": false,
         "box": "bento/almalinux-8.10",
         "ip_addr": "10.0.0.206",
-        "memory": "2048",
+        "memory": "8192",
         "no_share": true,
         "primary": true,
         "app_port": "22",
