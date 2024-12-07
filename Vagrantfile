@@ -7,7 +7,7 @@ Vagrant.require_version ">= 2.0.0"
 
 # Select the config file from the STAGE environment variable (dev or test)
 # VM Configs are loaded from json files.
-$Stage = ENV['STAGE'] || "dev"
+$Stage = ENV['STAGE'] || "test"
 # Require JSON module
 require 'json'
 # Read JSON file with config details
@@ -47,6 +47,7 @@ Vagrant.configure(2) do |config|
            "--cpus", guest['cpus'],
            "--memory", guest['memory'],
            "--graphicscontroller", "VMSVGA",
+           '--natnet1', '192.168.33.0/24',
            "--vram", "64",
            "--cableconnected1", "on"
         ]

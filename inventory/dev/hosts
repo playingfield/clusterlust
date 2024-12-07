@@ -1,10 +1,6 @@
 [all]
-controller ansible_host=192.168.56.3
-control01 ansible_host=192.168.56.4 ip=192.168.56.4 etcd_member_name=etcd1
-worker10 ansible_host=192.168.56.10 ip=192.168.56.10
-
-[bastion]
-controller
+k8s-master01 ansible_host=10.0.0.231 ip=10.0.0.231 etcd_member_name=etcd1
+k8s-node01 ansible_host=10.0.0.209 ip=10.0.0.209
 
 [k8s_cluster:children]
 kube_control_plane
@@ -14,18 +10,17 @@ calico_rr
 [calico_rr]
 
 [kube_control_plane]
-control01
+k8s-master01
 
 [etcd]
-control01
+k8s-master01
 
 [kube_node]
-worker10
+k8s-node01
 
 [all:vars]
 ansible_user=vagrant
 ansible_private_key_file = ~/.vagrant.d/insecure_private_key
 
 [k8s_cluster:vars]
-;ansible_ssh_common_args='-J vagrant@192.168.56.3'
 etcd_deployment_type=kubeadm
