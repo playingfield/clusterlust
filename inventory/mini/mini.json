@@ -6,7 +6,7 @@
         "distro": "almalinux",
         "family": "RedHat",
         "gui": false,
-        "box": "bento/almalinux-8.10",
+        "box": "almalinux/8",
         "ip_addr": "10.0.0.231",
         "memory": "8192",
         "no_share": true,
