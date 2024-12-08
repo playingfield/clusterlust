@@ -1,3 +1,4 @@
+VAGRANT_DEFAULT_PROVIDER=vmware_fusion
 .PHONY: up
 up:
 	vagrant up --no-provision

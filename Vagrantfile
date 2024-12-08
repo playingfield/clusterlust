@@ -41,6 +41,12 @@ Vagrant.configure(2) do |config|
 
       # set no_share to false to enable file sharing
       srv.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: guest['no_share']
+
+      srv.vm.provider :vmware_desktop do |vmware|
+        vmware.gui = guest['gui']
+        vmware.vmx['memsize'] = guest['memory']
+        vmware.vmx['numvcpus'] =  guest['cpus']
+      end
       srv.vm.provider :virtualbox do |virtualbox|
         virtualbox.customize ["modifyvm", :id,
            "--audio", "none",
