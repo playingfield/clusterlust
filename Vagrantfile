@@ -42,6 +42,19 @@ Vagrant.configure(2) do |config|
       # set no_share to false to enable file sharing
       srv.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: guest['no_share']
 
+      srv.vm.provider "hyperv" do |hyperv|
+        hyperv.cpus = guest['cpu']
+        hyperv.memory = guest['memory']
+        hyperv.vmname = guest['name']
+        hyperv.enable_virtualization_extensions = true
+        hyperv.vm_integration_services = {
+          guest_service_interface: true,
+          heartbeat: true,
+          shutdown: true,
+          time_synchronization: true,
+        }
+        hyperv.linked_clone = true
+      end
       srv.vm.provider :vmware_desktop do |vmware|
         vmware.gui = guest['gui']
         vmware.vmx['memsize'] = guest['memory']
