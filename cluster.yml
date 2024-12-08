@@ -1,0 +1,50 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Common
+  hosts: all:!localhost:!bastion
+  become: true
+  gather_facts: false
+  pre_tasks:
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+
+- name: Install Kubernetes
+  become: true
+  ansible.builtin.import_playbook: kubernetes_sigs.kubespray.cluster
+  tags: kubernetes
+
+- name: Kube config
+  hosts: all
+  tags: [kube_config]
+  tasks:
+    - name: Fetch kube config from master
+      when: ansible_hostname in groups['kube_control_plane']
+      become: true
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/admin.conf
+        dest: "{{ playbook_dir }}/files/"
+        mode: '0600'
+        flat: true
+
+    - name: Ensure .kube directory exists
+      become: false
+      ansible.builtin.file:
+        path: ~/.kube
+        state: directory
+        mode: '0700'
+
+    - name: Copy kube config to nodes
+      become: false
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/files/admin.conf"
+        dest: ~/.kube/config
+        mode: '0600'
+
+    - name: Remove kube config from controller
+      delegate_to: localhost
+      connection: local
+      become: false
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/files/admin.conf"
+        state: absent
