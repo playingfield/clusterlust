@@ -4,6 +4,10 @@ up:
 	vagrant up --no-provision
 	vagrant provision
 
+.PHONY: secureboot
+secureboot:
+	pwsh 'Set-VMFirmware -VMName "k8s-node" -EnableSecureBoot On -SecureBootTemplate "MicrosoftUEFICertificateAuthority"'
+
 .PHONY: provision
 provision:
 	./provision.yml -b -l k8s_cluster
