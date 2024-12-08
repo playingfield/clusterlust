@@ -1,0 +1,17 @@
+[
+    {
+        "name": "k8s-node",
+        "autostart": true,
+        "cpus": 2,
+        "distro": "almalinux",
+        "family": "RedHat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "10.0.0.231",
+        "memory": "8192",
+        "no_share": true,
+        "primary": true,
+        "app_port": "6443",
+        "forwarded_port": "6443"
+    }
+]
