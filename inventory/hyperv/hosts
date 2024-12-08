@@ -1,0 +1,25 @@
+[all]
+k8s-node ansible_host=172.29.155.76 ip=172.29.155.76 etcd_member_name=etcd1
+
+[k8s_cluster:children]
+kube_control_plane
+kube_node
+calico_rr
+
+[calico_rr]
+
+[kube_control_plane]
+k8s-node
+
+[etcd]
+k8s-node
+
+[kube_node]
+k8s-node
+
+[all:vars]
+ansible_user=vagrant
+ansible_private_key_file = ~/.vagrant.d/insecure_private_key
+
+[k8s_cluster:vars]
+etcd_deployment_type=kubeadm
