@@ -1,5 +1,8 @@
 [all]
-k8s-node ansible_host=172.29.155.76 ip=172.29.155.76 etcd_member_name=etcd1
+; You need to copy the default SSH key for vagrant to your WSL
+; cp /mn/c/Users/$USER/.vagrant.d/insecure_private_key ~/.ssh/vagrant
+; Hyper-V needs a Wi-Fi network with DHCP, enter your IP twice on the line below:
+k8s-node ansible_host=192.168.178.89 ip=192.168.178.89 etcd_member_name=etcd1
 
 [k8s_cluster:children]
 kube_control_plane
@@ -19,7 +22,7 @@ k8s-node
 
 [all:vars]
 ansible_user=vagrant
-ansible_private_key_file = ~/.vagrant.d/insecure_private_key
+ansible_private_key_file = ~/.ssh/vagrant
 
 [k8s_cluster:vars]
 etcd_deployment_type=kubeadm
