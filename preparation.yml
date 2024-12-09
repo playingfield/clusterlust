@@ -4,8 +4,6 @@
 - name: Common
   hosts: bastion
   become: true
-  vars:
-    docker_add_repo: true
   tasks:
 
     - name: Install docker-ce
