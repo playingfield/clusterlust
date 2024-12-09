@@ -12,7 +12,7 @@
         "no_share": true,
         "primary": true,
         "app_port": "22",
-        "forwarded_port": "2209"
+        "forwarded_port": "2206"
     },
     {
         "name": "k8s-master01",
@@ -27,11 +27,11 @@
         "no_share": true,
         "primary": true,
         "app_port": "22",
-        "forwarded_port": "2209"
+        "forwarded_port": "2231"
     },
     {
         "name": "k8s-master02",
-        "autostart": true,
+        "autostart": false,
         "cpus": 2,
         "distro": "almalinux",
         "family": "RedHat",
@@ -40,13 +40,13 @@
         "ip_addr": "10.0.0.232",
         "memory": "2048",
         "no_share": true,
-        "primary": true,
+        "primary": false,
         "app_port": "22",
-        "forwarded_port": "2210"
+        "forwarded_port": "2232"
     },
     {
         "name": "k8s-master03",
-        "autostart": true,
+        "autostart": false,
         "cpus": 2,
         "distro": "almalinux",
         "family": "RedHat",
@@ -72,7 +72,7 @@
         "no_share": true,
         "primary": true,
         "app_port": "22",
-        "forwarded_port": "2213"
+        "forwarded_port": "2209"
     },
     {
         "name": "k8s-node02",
@@ -87,7 +87,7 @@
         "no_share": true,
         "primary": false,
         "app_port": "22",
-        "forwarded_port": "2214"
+        "forwarded_port": "2210"
     },
     {
         "name": "k8s-node03",
@@ -102,6 +102,36 @@
         "no_share": true,
         "primary": false,
         "app_port": "22",
-        "forwarded_port": "2215"
+        "forwarded_port": "2212"
+    },
+    {
+        "name": "k8s-node04",
+        "autostart": true,
+        "cpus": 2,
+        "distro": "almalinux",
+        "family": "RedHat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "10.0.0.213",
+        "memory": "4096",
+        "no_share": true,
+        "primary": false,
+        "app_port": "22",
+        "forwarded_port": "2213"
+    },
+    {
+        "name": "k8s-node05",
+        "autostart": true,
+        "cpus": 2,
+        "distro": "almalinux",
+        "family": "RedHat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "10.0.0.214",
+        "memory": "4096",
+        "no_share": true,
+        "primary": false,
+        "app_port": "22",
+        "forwarded_port": "2214"
     }
 ]
