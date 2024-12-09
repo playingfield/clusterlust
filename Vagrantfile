@@ -83,6 +83,8 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "preparation.yml"
     ansible.compatibility_mode = "2.0"
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
+    ansible.galaxy_role_file = "roles/requirements.yml"
+    ansible.galaxy_roles_path = "roles"
     ansible.verbose = ""
     ansible.limit = "all" # or only "nodes" group, etc.
   end
