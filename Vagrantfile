@@ -37,10 +37,10 @@ Vagrant.configure(2) do |config|
     config.vm.define guest['name'], autostart: guest['autostart'], primary: guest['primary'] do |srv|
       srv.vm.box = guest['box']
       srv.vm.hostname = guest['name']
-      # You'll need to ad an _external_ network adapter in hyperv, bound to a connected interface.
+      # Hyper-V needs an _external_ network adapter, bound to a connected interface.
       srv.vm.network "public_network", type: "dhcp", bridge: "Wi-Fi"
       # Other Hypervisors allow setting the IP
-      srv.vm.network 'private_network', ip: guest['ip_addr']
+      #srv.vm.network 'private_network', ip: guest['ip_addr']
 
       # set no_share to false to enable file sharing
       srv.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: guest['no_share']
