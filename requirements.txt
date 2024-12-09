@@ -2,11 +2,13 @@ ansible-core==2.16.4
 ansible-lint
 cryptography==42.0.4
 distlib==0.3.9
+helm
 jinja2==3.1.4
 # Needed for jinja2 json_query templating
 jmespath==1.0.1
 # Needed for ansible.utils.validate module
 jsonschema==4.22.0
+kubernetes
 kubernetes-validate==1.31.0
 MarkupSafe==2.1.5
 molecule
