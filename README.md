@@ -12,6 +12,7 @@ Clusterlust facilitates the deployment of Kubernetes clusters using the Kubespra
 
 ### 1. Clone the Repository
 ```bash
+cd
 git clone https://github.com/playingfield/clusterlust.git
 cd clusterlust
 git checkout -b yourcluster
@@ -73,5 +74,39 @@ ansible all -m ping -i inventory/yourcluster/hosts
 
 - Deployment Failures: Check the Ansible playbook output for errors and consult the logs on the affected nodes.
 
+## Development
 
-## Additional Resources
+We deploy the Kubernetes clusters using Ansible, you'll need a Hypervisor to host your Kubernetes machine(s), and linux to run Ansible.
+Doing this on a Windows laptop is possible, but takes a bit more care than on Linux/macOS.
+
+### Hypervisor
+Preferred local hypervisors are VMWare Desktop, or Virtualbox. When you are restricted by policy or firewall to install, but you are a local admin, you can enable Hyper-V and WSL, both Windows components. You'll need to enable using SecureBoot in Hyper-V for linux, otherwise they won't boot at all. On-prem hypervisors can be used as well, VMWare and Proxmox are preferred.
+You can run this in the cloud when you have two virtual machines scale-sets.
+
+#### Hyper-V
+```PowerShell
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+Set-VMFirmware -VMName "k8s-node" -EnableSecureBoot On -SecureBootTemplate "MicrosoftUEFICertificateAuthority"
+```
+
+### Vagrant
+
+Use Vagrant to have an abstract interface to your local hypervisor. Install Vagrant from a [download from HashiCorp](https://developer.hashicorp.com/vagrant/downloads), or with choco.
+
+```PowerShell
+choco install vagrant -y
+```
+
+Please note that some security policies might block binaries run from %appdata%. E.g. choco installed software.  To bypass this, download the specific binary from the website yourself.
+
+### Windows Sybsystem Linux
+
+WSL allows you to run AlmaLinux on your Windows laptop. First install [msixbundle](https://github.com/microsoft/winget-cli/releases/tag/v1.3.1741), then:
+
+```PowerShell
+wsl --install
+winget install 'AlmaLinux 8 WSL'
+wsl --set-default AlmaLinux-8
+```
+
+###
