@@ -23,6 +23,7 @@ kube_network_plugin: calico
 kube_proxy_mode: iptables
 kubectl_localhost: true
 kubeconfig_localhost: true
+kube_apiserver_node_port_range: "1024-32767"
 ntp_enabled: true
 ntp_timezone: Europe/Amsterdam
 ntp_manage_config: true
