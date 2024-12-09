@@ -2,7 +2,7 @@
 ---
 
 - name: Common
-  hosts: bastion
+  hosts: proxy
   become: true
   tasks:
 
