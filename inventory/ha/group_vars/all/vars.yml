@@ -16,7 +16,7 @@ upstream_dns_servers:
   - 168.63.129.16
 docker_version: "docker-ce-26.1.0"
 etcd_version: "v3.5.12"
-etcd_deployment_type: host
+etcd_deployment_type: kubeadm
 helm_enabled: true
 ingress_nginx_enabled: true
 krew_enabled: false
