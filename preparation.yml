@@ -12,17 +12,6 @@
         state: stopped
         enabled: false
 
-    - name: Fix dnf
-      ansible.builtin.lineinfile:
-        path: /etc/dnf/dnf.conf
-        regexp: "{{ item.regexp }}"
-        line: "{{ item.line }}"
-        state: present
-      loop:
-        - regexp: '^proxy='
-          line: "proxy={{ http_proxy | default('') }}"
-        - regexp: '^repo_gpgcheck='
-          line: 'repo_gpgcheck=0'
 
 - name: Install squid on proxy host
   hosts: proxy
@@ -44,3 +33,21 @@
       ansible.builtin.import_role:
         name: proxy
       tags: [proxy]
+
+- name: Enable proxy
+  hosts: k8s_cluster
+  become: true
+  gather_facts: false
+  tags: [proxy]
+  tasks:
+    - name: Fix dnf
+      ansible.builtin.lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      loop:
+        - regexp: '^proxy='
+          line: "proxy={{ http_proxy | default('') }}"
+        - regexp: '^repo_gpgcheck='
+          line: 'repo_gpgcheck=0'
