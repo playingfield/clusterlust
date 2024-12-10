@@ -6,11 +6,23 @@
 - name: Reset cluster
   hosts: etcd:k8s_cluster:calico_rr
   gather_facts: true
+  become: true
   collections:
     - kubernetes_sigs.kubespray
 
   tasks:
     - ansible.builtin.include_role:
         name: kubespray-defaults
+
     - ansible.builtin.include_role:
         name: reset
+
+    - ansible.builtin.command:
+        cmd: kubeadm reset -f
+
+    - ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/kubernetes
+        - /etc/cni/net.d
