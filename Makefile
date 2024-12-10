@@ -15,6 +15,7 @@ cluster:
 .PHONY: clean
 clean:
 	vagrant destroy -f
+	./galaxy.sh
 
 .PHONY: all
 all: clean up cluster
