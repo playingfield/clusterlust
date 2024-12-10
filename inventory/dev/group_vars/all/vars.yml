@@ -13,7 +13,7 @@ upstream_dns_servers:
   - 9.9.9.9
 docker_version: "docker-ce-26.1.0"
 etcd_version: "v3.5.12"
-etcd_deployment_type: host
+etcd_deployment_type: kubeadm
 krew_enabled: false
 kube_config_dir: /etc/kubernetes
 kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"
