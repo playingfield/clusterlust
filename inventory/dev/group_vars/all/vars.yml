@@ -1,12 +1,14 @@
 ---
-argocd_enabled: true
+argocd_enabled: false
 artifacts_dir: "{{ playbook_dir }}/files"
 bin_dir: /usr/bin
-cluster_name: test
+cluster_name: dev
 container_manager: containerd  # default
 containerd_bin_dir: /usr/bin
 containerd_version: "1.6.32"
 dns_mode: coredns
+download_localhost: false # on ansible controller
+download_run_once: false # rsync did not work for me
 enable_dual_stack_networks: false
 helm_enabled: true
 upstream_dns_servers:
@@ -14,6 +16,8 @@ upstream_dns_servers:
 docker_version: "docker-ce-26.1.0"
 etcd_version: "v3.5.12"
 etcd_deployment_type: kubeadm
+http_proxy: "http://10.0.0.206:3128"
+https_proxy: "http://10.0.0.206:3128"
 krew_enabled: false
 kube_config_dir: /etc/kubernetes
 kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"

@@ -1,4 +1,19 @@
 [
+      {
+        "name": "controller",
+        "autostart": true,
+        "cpus": 4,
+        "distro": "almalinux",
+        "family": "RedHat",
+        "gui": false,
+        "box": "almalinux/8",
+        "ip_addr": "10.0.0.206",
+        "memory": "8192",
+        "no_share": true,
+        "primary": true,
+        "app_port": "3128",
+        "forwarded_port": "3128"
+    },
     {
         "name": "k8s-master01",
         "autostart": true,
@@ -10,7 +25,7 @@
         "ip_addr": "10.0.0.231",
         "memory": "2048",
         "no_share": true,
-        "primary": true,
+        "primary": false,
         "app_port": "6443",
         "forwarded_port": "6443"
     },

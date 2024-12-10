@@ -8,14 +8,14 @@ up:
 secureboot:
 	pwsh 'Set-VMFirmware -VMName "k8s-node" -EnableSecureBoot On -SecureBootTemplate "MicrosoftUEFICertificateAuthority"'
 
-.PHONY: provision
-provision:
-	./provision.yml -b -l k8s_cluster
+.PHONY: cluster
+cluster:
+	./cluster.yml -b
 
 .PHONY: clean
 clean:
 	vagrant destroy -f
-	rm -rf galaxy_roles/*
+	./galaxy.sh
 
 .PHONY: all
-all: up provision
+all: clean up cluster
