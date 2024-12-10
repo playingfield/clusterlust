@@ -1,12 +1,14 @@
 ---
-argocd_enabled: true
+argocd_enabled: false
 artifacts_dir: "{{ playbook_dir }}/files"
 bin_dir: /usr/bin
-cluster_name: test
+cluster_name: dev
 container_manager: containerd  # default
 containerd_bin_dir: /usr/bin
 containerd_version: "1.6.32"
 dns_mode: coredns
+download_localhost: false # on ansible controller
+download_run_once: false # rsync did not work for me
 enable_dual_stack_networks: false
 helm_enabled: true
 upstream_dns_servers:
