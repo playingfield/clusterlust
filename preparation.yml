@@ -1,29 +1,8 @@
 #!/usr/bin/env ansible-playbook
 ---
 
-- name: Common
-  hosts: proxy
-  become: true
-  gather_facts: false
-
-  tasks:
-
-    - name: Gathering facts
-      ansible.builtin.setup:
-        gather_subset: platform
-
-    - name: Install docker-ce
-      ansible.builtin.import_role:
-        name: geerlingguy.docker
-      tags: [docker]
-
-    - name: Install Squid proxy
-      ansible.builtin.import_role:
-        name: proxy
-      tags: [proxy]
-
 - name: Disable firewall
-  hosts: k8s_cluster
+  hosts: k8s_cluster:proxy
   become: true
   gather_facts: false
   pre_tasks:
@@ -44,3 +23,24 @@
           line: "proxy={{ http_proxy | default('') }}"
         - regexp: '^repo_gpgcheck='
           line: 'repo_gpgcheck=0'
+
+- name: Install squid on proxy host
+  hosts: proxy
+  become: true
+  gather_facts: false
+
+  tasks:
+
+    - name: Gathering facts
+      ansible.builtin.setup:
+        gather_subset: platform
+
+    - name: Install docker-ce
+      ansible.builtin.import_role:
+        name: geerlingguy.docker
+      tags: [docker]
+
+    - name: Install Squid proxy
+      ansible.builtin.import_role:
+        name: proxy
+      tags: [proxy]
