@@ -41,7 +41,7 @@ cd ..
 Edit the `inventory/yourcluster/hosts` file to list your cluster nodes' IP addresses.
 Edit the `inventory/yourcluster/group_vars/all/vars.yml` to select features in your cluster.
 
-For detailed information, refer to the Kubespray documentation [https://kubespray.io/#/](https://kubespray.io/#/).
+For detailed information, refer to KUBESPRAY.md or [https://kubespray.io/#/](https://kubespray.io/#/).
 
 ### 4. Manage the Cluster
 
