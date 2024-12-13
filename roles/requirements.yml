@@ -1,6 +1,0 @@
----
-roles:
-  - src: geerlingguy.docker
-  - src: bbaassssiiee.proxy
-    name: proxy
-    version: 1.0.3
