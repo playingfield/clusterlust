@@ -2,7 +2,7 @@
 ---
 
 - name: Disable firewall
-  hosts: k8s_cluster:proxy
+  hosts: k8s_cluster
   become: true
   gather_facts: false
   pre_tasks:
@@ -28,11 +28,6 @@
       ansible.builtin.import_role:
         name: geerlingguy.docker
       tags: [docker]
-
-    - name: Install Squid proxy
-      ansible.builtin.import_role:
-        name: proxy
-      tags: [proxy]
 
 - name: Enable proxy
   hosts: k8s_cluster
