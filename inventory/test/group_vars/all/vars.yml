@@ -39,12 +39,12 @@ http_proxy: "http://10.0.0.206:3128"
 https_proxy: "http://10.0.0.206:3128"
 
 kubeblocks_add_ons:
-  - addon_name: kb-addon-pg
+  - addon_name: kb-addon-postgresql
     helm_repo_name: kubeblocks
     helm_chart_name: postgresql
     addon_namespace: kb-system
   # rabbitmq cluster cannot be created with kbcli, use kubectl
-  - addon_name: kb-addon-rmq
+  - addon_name: kb-addon-rabbitmq
     helm_repo_name: kubeblocks
     helm_chart_name: rabbitmq
     addon_namespace: kb-system
