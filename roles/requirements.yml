@@ -2,4 +2,4 @@
 roles:
   - src: https://github.com/bbaassssiiee/ansible-role-kubeblocks.git
     name: bbaassssiiee.kubeblocks
-    version: 0.0.2
+    version: 0.0.3
