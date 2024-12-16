@@ -1,11 +1,11 @@
-- name: Create namespace for KubeBlocks add-on
+- name: "Create namespace for {{ item.addon_name }}"
   kubernetes.core.k8s:
     name: "{{ item.addon_namespace }}"
     api_version: v1
     kind: Namespace
     state: present
 
-- name: Install the KubeBlocks add-on
+- name: "Install add-on {{ item.addon_name }}"
   kubernetes.core.helm:
     name: "{{ item.addon_name }}"
     chart_ref: "{{ item.helm_repo_name }}/{{ item.helm_chart_name }}"
