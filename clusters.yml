@@ -7,4 +7,4 @@
 
 - name: Create the KubeBlocks cluster
   ansible.builtin.command:
-    cmd: "kbcli cluster create {{ kb_cluster_type }} {{ kb_cluster_name }} -n {{ kb_cluster_name }}"
+    cmd: "kbcli cluster create {{ item.kb_cluster_type }} {{ item.kb_cluster_name }} -n {{ item.kb_cluster_name }}"
