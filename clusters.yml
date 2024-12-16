@@ -1,0 +1,10 @@
+- name: Create namespace for KubeBlocks cluster
+  kubernetes.core.k8s:
+    name: "{{ item.kb_cluster_ns }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Create the KubeBlocks cluster
+  ansible.builtin.command:
+    cmd: "kbcli cluster create {{ kb_cluster_type }} {{ kb_cluster_name }} -n {{ kb_cluster_name }}"
