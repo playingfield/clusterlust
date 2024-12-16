@@ -1,0 +1,35 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: Kube config on controller
+  hosts: all
+  tags: [kube_config]
+  gather_facts: false
+  become: false
+  tasks:
+    - name: Create local config dir
+      delegate_to: localhost
+      become: false
+      ansible.builtin.file:
+        path: .kube
+        state: directory
+        mode: '0700'
+
+    - name: Fetch kube config from master
+      when: inventory_hostname in groups['kube_control_plane']
+      become: true
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/admin.conf
+        dest: ~/.kube/config
+        mode: '0600'
+        flat: true
+
+    - name: Configure k8s master
+      delegate_to: localhost
+      become: false
+      ansible.builtin.lineinfile:
+        path: ~/.kube/config
+        regexp: '    server.*6443$'
+        line: "    server: https://{{ groups['kube_control_plane'][0] }}:6443"
+        state: present
+        mode: '0600'
