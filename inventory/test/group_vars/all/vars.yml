@@ -43,6 +43,7 @@ kubeblocks_add_ons:
     helm_repo_name: kubeblocks
     helm_chart_name: postgresql
     addon_namespace: kb-system
+  # rabbitmq cluster cannot be created with kbcli, use kubectl
   - addon_name: kb-addon-rmq
     helm_repo_name: kubeblocks
     helm_chart_name: rabbitmq
