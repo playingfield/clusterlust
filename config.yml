@@ -11,7 +11,7 @@
       delegate_to: localhost
       become: false
       ansible.builtin.file:
-        path: .kube
+        path: /home/semaphore/.kube
         state: directory
         mode: '0700'
 
@@ -20,7 +20,7 @@
       become: true
       ansible.builtin.fetch:
         src: /etc/kubernetes/admin.conf
-        dest: ~/.kube/config
+        dest: /home/semaphore/.kube/config
         mode: '0600'
         flat: true
 
@@ -28,7 +28,7 @@
       delegate_to: localhost
       become: false
       ansible.builtin.lineinfile:
-        path: ~/.kube/config
+        path: /home/semaphore/.kube/config
         regexp: '    server.*6443$'
         line: "    server: https://{{ groups['kube_control_plane'][0] }}:6443"
         state: present
