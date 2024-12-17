@@ -1,0 +1,20 @@
+---
+- name: "Remove app {{ item.app_name }}"
+  kubernetes.core.helm:
+    name: "{{ item.app_name }}"
+    chart_ref: "{{ item.helm_repo_name }}/{{ item.helm_chart_name }}"
+    release_namespace: "{{ item.app_namespace }}"
+    create_namespace: true
+    state: absent
+    tags:
+      - absent
+
+- name: "Install app {{ item.app_name }}"
+  kubernetes.core.helm:
+    name: "{{ item.app_name }}"
+    chart_ref: "{{ item.helm_repo_name }}/{{ item.helm_chart_name }}"
+    release_namespace: "{{ item.app_namespace }}"
+    create_namespace: true
+    state: present
+    tags:
+      - present

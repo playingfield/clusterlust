@@ -3,8 +3,12 @@
     name: "{{ item.kb_cluster_ns }}"
     api_version: v1
     kind: Namespace
-    state: present
+    state: "{{ item.kb_cluster_state }}"
+  tags:
+    - present
 
 - name: "Create {{ item.kb_cluster_type }} cluster {{ item.kb_cluster_name }}"
   ansible.builtin.command:
     cmd: "kbcli cluster create {{ item.kb_cluster_type }} {{ item.kb_cluster_name }} -n {{ item.kb_cluster_ns }}"
+  tags:
+    - present

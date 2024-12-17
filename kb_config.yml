@@ -1,0 +1,34 @@
+---
+# ~/.kube/config should be valid
+- name: Manage KubeBlocks
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Install KubeBlocks
+      ansible.builtin.include_role:
+        name: bbaassssiiee.kubeblocks
+
+    - name: Install KubeBlocks apps
+      when:
+        - kubeblocks_add_ons|length >= 1
+      ansible.builtin.include_tasks:
+        file: kb_apps.yml
+        apply:
+          tags:
+            - present
+      loop: "{{ kubeblocks_add_ons }}"
+
+    - name: Manage KubeBlock clusters
+      when:
+        - kubeblocks_clusters|length >= 1
+      ansible.builtin.include_tasks: kb_clusters.yml
+      loop: "{{ kubeblocks_clusters }}"
+
+    - name: Remove KubeBlocks add-ons
+      when:
+        - kubeblocks_add_ons|length >= 1
+      ansible.builtin.include_tasks:
+        file: kb_apps.yml
+        apply:
+          tags:
+            - absent

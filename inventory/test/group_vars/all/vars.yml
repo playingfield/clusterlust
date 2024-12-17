@@ -39,24 +39,35 @@ http_proxy: "http://10.0.0.206:3128"
 https_proxy: "http://10.0.0.206:3128"
 
 kubeblocks_add_ons:
-  - addon_name: kb-addon-postgresql
+  - app_name: kb-addon-postgresql
     helm_repo_name: kubeblocks
+    helm_repo_url: kubeblocks
     helm_chart_name: postgresql
+    helm_values_file: postgresql.yml
     addon_namespace: kb-system
+    app_state: present
   # rabbitmq cluster cannot be created with kbcli, use kubectl
-  - addon_name: kb-addon-rabbitmq
+  - app_name: kb-addon-rabbitmq
     helm_repo_name: kubeblocks
+    helm_repo_url: kubeblocks
     helm_chart_name: rabbitmq
-    addon_namespace: kb-system
-  - addon_name: kb-addon-kafka
+    helm_values_file: kafka.yml
+    app_namespace: kb-system
+    app_state: absent
+  - app_name: kb-addon-kafka
     helm_repo_name: kubeblocks
+    helm_repo_url: kubeblocks
     helm_chart_name: kafka
-    addon_namespace: kb-system
+    helm_values_file: kafka.yml
+    app_namespace: kb-system
+    app_state: absent
 
 kubeblocks_clusters:
   - kb_cluster_type: postgresql
     kb_cluster_name: data
     kb_cluster_ns: kb-postgres
+    kb_cluster_state: absent
   - kb_cluster_type: kafka
     kb_cluster_name: kafka-one
     kb_cluster_ns: kb-stream
+    kb_cluster_state: absent
