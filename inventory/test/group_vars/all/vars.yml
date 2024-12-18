@@ -22,8 +22,8 @@ etcd_version: "v3.5.12"
 etcd_deployment_type: kubeadm
 helm_enabled: true
 ingress_nginx_enabled: false
-loadbalancer_apiserver_localhost: true
-loadbalancer_apiserver_type: haproxy
+loadbalancer_apiserver_localhost: false  # single-master
+# loadbalancer_apiserver_type: haproxy
 krew_enabled: false
 kube_pods_subnet: "192.168.0.0/16"
 kube_network_plugin: calico
