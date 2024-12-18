@@ -22,14 +22,14 @@ metallb_config:
   address_pools:
     primary:
       ip_range:
-        - 10.0.0.200-10.0.1.254
+        - 10.0.0.200-10.0.0.254
     pool1:
       ip_range:
         - 10.0.1.50/29
       avoid_buggy_ips: true
     pool2:
       ip_range:
-        - 10.0.0.100/29
+        - 10.0.1.100/29
       avoid_buggy_ips: true
   layer2:
     - primary
