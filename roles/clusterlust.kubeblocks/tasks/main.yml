@@ -1,10 +1,4 @@
 ---
-- name: Install KubeBlocks add-ons
-  when:
-    - kubeblocks_add_ons|length >= 1
-  ansible.builtin.include_tasks: addons.yml
-  loop: "{{ kubeblocks_add_ons }}"
-
 - name: Install KubeBlock clusters
   when:
     - kubeblocks_clusters|length >= 1
