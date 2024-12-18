@@ -2,7 +2,7 @@ ansible-core==2.16.4
 ansible-lint
 cryptography==42.0.4
 distlib==0.3.9
-helm
+helm-python
 jinja2==3.1.4
 # Needed for jinja2 json_query templating
 jmespath==1.0.1
