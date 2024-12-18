@@ -1,5 +1,6 @@
 ---
 argocd_enabled: false
+azure_csi_enabled: true
 artifacts_dir: "{{ playbook_dir }}/files"
 bin_dir: /usr/bin
 calico_version: "v3.27.3"
@@ -34,6 +35,6 @@ ntp_servers:
   - "1.nl.pool.ntp.org"
   - "2.nl.pool.ntp.org"
   - "3.nl.pool.ntp.org"
-
+persistent_volumes_enabled: true
 http_proxy: "http://10.0.0.206:3128"
 https_proxy: "http://10.0.0.206:3128"
