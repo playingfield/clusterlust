@@ -1,5 +1,6 @@
 kube_proxy_strict_arp: true
 metallb_enabled: true
+metallb_namespace: infrastructure
 metallb_speaker_enabled: true
 metallb_config:
   controller:
