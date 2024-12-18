@@ -29,3 +29,5 @@ kubectl_localhost: true
 kubeconfig_localhost: true
 kube_apiserver_node_port_range: "1024-32767"
 persistent_volumes_enabled: true
+# Set selinux state, permitted values are permissive, enforcing and disabled.
+preinstall_selinux_state: permissive
