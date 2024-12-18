@@ -64,11 +64,11 @@ kubeblocks_add_ons:
     state: present
     enabled: true
     version: 0.9.0
-  - addon_name: postgresql
-    addon_namespace: kb-postgres
-    state: present
-    enabled: true
-    version: 0.9.0
+# - addon_name: postgresql
+#    addon_namespace: kb-postgres
+#    state: present
+#    enabled: true
+#    version: 0.9.0
   - addon_name: prometheus
     addon_namespace: monitoring
     state: present
