@@ -45,7 +45,7 @@
       ansible.builtin.file:
         path: "~{{ cluster_admin | default('root') }}/.kube"
         owner: "{{ cluster_admin | default('root') }}"
-        group: "{{ cluster_admin | default('root') }}"
+        group: "{{ cluster_admin_group | default('root') }}"
         state: directory
         mode: '0700'
 
@@ -57,5 +57,5 @@
         src: "~{{ local_user }}/.kube/config"
         dest: "~{{ cluster_admin | default('root') }}/.kube/"
         owner: "{{ cluster_admin | default('root') }}"
-        group: "{{ cluster_admin | default('root') }}"
+        group: "{{ cluster_admin_group | default('root') }}"
         mode: '0600'

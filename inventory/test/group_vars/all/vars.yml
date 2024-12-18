@@ -1,11 +1,12 @@
 ---
+cluster_admin: PSIAdmin
+cluster_admin_group: users
 argocd_enabled: false
 azure_csi_enabled: false  # credentials required
 artifacts_dir: "{{ playbook_dir }}/files"
 bin_dir: /usr/bin
 calico_version: "v3.27.3"
 cert_manager_enabled: false
-cluster_admin: PSIAdmin
 cluster_name: test
 container_manager: containerd  # default
 containerd_bin_dir: /usr/bin
