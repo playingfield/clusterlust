@@ -24,7 +24,7 @@ Run the included setup scripts to install Ansible in a python virtualenv, and in
 
 ```bash
 source ansible.sh
-./galaxy.sh
+./prepare.sh
 ```
 ### 3. Configure Inventory
 
