@@ -1,0 +1,67 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: Kube config on controller
+  hosts: kube_control_plane
+  tags: [kube_config]
+  gather_facts: true
+  tasks:
+    - name: Gather facts
+      become: false
+      ansible.builtin.setup:
+        gather_subset: platform
+
+    - name: Set local user
+      become: false
+      ansible.builtin.set_fact:
+        local_user: "{{ lookup('env', 'USER') }}"
+
+    - name: Create local config dirs
+      delegate_to: localhost
+      become: true
+      ansible.builtin.file:
+        path: "~{{ local_user }}/.kube"
+        owner: "{{ local_user }}"
+        state: directory
+        mode: '0700'
+
+    - name: Fetch kube config from master
+      when: inventory_hostname in groups['kube_control_plane']
+      become: true
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/admin.conf
+        dest: "~{{ local_user }}/.kube/config"
+        owner: "{{ local_user }}"
+        mode: '0600'
+        flat: true
+
+    - name: Configure k8s master
+      delegate_to: localhost
+      become: true
+      ansible.builtin.lineinfile:
+        path: "~{{ local_user }}/.kube/config"
+        regexp: '    server.*6443$'
+        line: "    server: https://{{ groups['kube_control_plane'][0] }}:6443"
+        state: present
+        mode: '0600'
+
+    - name: Create local config dirs
+      delegate_to: localhost
+      become: true
+      ansible.builtin.file:
+        path: "~{{ cluster_admin | default('root') }}/.kube"
+        owner: "{{ cluster_admin | default('root') }}"
+        group: "{{ cluster_admin | default('root') }}"
+        state: directory
+        mode: '0700'
+
+    - name: Copy kube config to cluster
+      delegate_to: localhost
+      become: true
+      ansible.builtin.copy:
+        remote_src: true
+        src: "~{{ local_user }}/.kube/config"
+        dest: "~{{ cluster_admin | default('root') }}/.kube/"
+        owner: "{{ cluster_admin | default('root') }}"
+        group: "{{ cluster_admin | default('root') }}"
+        mode: '0600'
