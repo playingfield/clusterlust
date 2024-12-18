@@ -26,7 +26,7 @@ kubeblocks_add_ons:
     version: 1.4.8
   - addon_name: csi-driver-nfs
     addon_namespace: kb-system
-    state: present
+    state: absent
     enabled: false
     version: 4.5.0
   - addon_name: csi-hostpath-driver
