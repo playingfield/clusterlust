@@ -5,16 +5,10 @@
   hosts: kube_control_plane
   tags: [kube_config]
   gather_facts: true
-  tasks:
-    - name: Gather facts
-      become: false
-      ansible.builtin.setup:
-        gather_subset: platform
+  vars:
+    local_user: semaphore
 
-    - name: Set local user
-      become: false
-      ansible.builtin.set_fact:
-        local_user: "{{ lookup('env', 'USER') }}"
+  tasks:
 
     - name: Create local config dirs
       delegate_to: localhost
