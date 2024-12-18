@@ -24,7 +24,7 @@ Run the included setup scripts to install Ansible in a python virtualenv, and in
 
 ```bash
 source ansible.sh
-./galaxy.sh
+./prepare.sh
 ```
 ### 3. Configure Inventory
 
@@ -43,9 +43,11 @@ Edit the `inventory/yourcluster/group_vars/all/vars.yml` to select features in y
 
 For detailed information, refer to KUBESPRAY.md or [https://kubespray.io/#/](https://kubespray.io/#/).
 
+Run the host-initialization.yml playbook to prep the machines.
+
 ### 4. Manage the Cluster
 
-Run the cluster playbook to deploy the cluster:
+Run the cluster.yml playbook to deploy the cluster:
 
 ```bash
 ./cluster.yml -i inventory/mycluster/hosts --become -K
@@ -59,11 +61,13 @@ Run the reset playbook to delete the cluster:
 
 ### Post-Deployment
 
-After deployment, verify the cluster status:
-NOTE: `~/.kube/config` is copied to all hosts for convenience. Run the cluster.yml playbook with `--skip-tags kube_config` to avoid that.
+After deployment, run the kube-config.yml playbook.
+NOTE: `~/.kube/config` is copied to the user running that playbook, and the `cluster_admin`, if defined, else to the `root` user too.
 
+Use `k9s` as tool to work with the cluster.
 ```bash
-kubectl get nodes
+# Start K9s in readonly mode - with all modification commands disabled
+k9s --readonly
 ```
 
 ### Troubleshooting

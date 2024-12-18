@@ -1,3 +1,4 @@
+#!/usr/bin/env ansible-playbook
 ---
 # ~/.kube/config should be valid
 - name: Manage KubeBlocks
@@ -8,14 +9,6 @@
       ansible.builtin.include_role:
         name: bbaassssiiee.kubeblocks
 
-    - name: Install KubeBlocks add-ons
-      when:
-        - kubeblocks_add_ons|length >= 1
-      ansible.builtin.include_tasks: addons.yml
-      loop: "{{ kubeblocks_add_ons }}"
-
-    - name: Install KubeBlock clusters
-      when:
-        - kubeblocks_clusters|length >= 1
-      ansible.builtin.include_tasks: clusters.yml
-      loop: "{{ kubeblocks_clusters }}"
+    - name: Configure KubeBlocks
+      ansible.builtin.include_role:
+        name: clusterlust.kubeblocks
