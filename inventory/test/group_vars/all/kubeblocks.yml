@@ -1,0 +1,111 @@
+---
+# KubeBlocks configuration depends on this Boolean:
+use_kubeblocks: true
+
+# Remove unused addons, disable addons that are not planned yet
+kubeblocks_add_ons:
+  - addon_name: alertmanager-webhook-adaptor
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.1.4
+  - addon_name: apecloud-mysql
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.9.0
+  - addon_name: apecloud-otel-collector
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.1.2-beta.3
+  - addon_name: aws-load-balancer-controller
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 1.4.8
+  - addon_name: csi-driver-nfs
+    addon_namespace: kb-system
+    state: present
+    enabled: false
+    version: 4.5.0
+  - addon_name: csi-hostpath-driver
+    addon_namespace: kb-system
+    state: present
+    enabled: false
+    version: 0.7.0
+  - addon_name: grafana
+    addon_namespace: monitoring
+    state: present
+    enabled: true
+    version: 6.43.5
+  - addon_name: kafka
+    addon_namespace: infrastructure
+    state: present
+    enabled: true
+    version: 0.9.0
+  - addon_name: llm
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.9.0
+  - addon_name: loki
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 5.8.9
+  - addon_name: mongodb
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.9.1
+  - addon_name: mysql
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.9.3
+  - addon_name: opensearch
+    addon_namespace: monitoring
+    state: present
+    enabled: true
+    version: 2.7.0
+  - addon_name: postgresql
+    addon_namespace: kb-system
+    state: present
+    enabled: true
+    version: 0.9.0
+  - addon_name: prometheus
+    addon_namespace: monitoring
+    state: present
+    enabled: true
+    version: 15.16.1
+  - addon_name: pulsar
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.9.1
+  - addon_name: qdrant
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.9.1
+  - addon_name: rabbitmq
+    addon_namespace: infrastructure
+    state: present
+    enabled: true
+    version: 0.9.0
+  - addon_name: redis
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.9.0
+  - addon_name: snapshot-controller
+    addon_namespace: kb-system
+    state: present
+    enabled: false
+    version: 1.7.2
+  - addon_name: victoria-metrics-agent
+    addon_namespace: kb-system
+    state: absent
+    enabled: false
+    version: 0.8.41
