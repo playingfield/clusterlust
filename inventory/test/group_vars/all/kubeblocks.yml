@@ -39,11 +39,6 @@ kubeblocks_add_ons:
     state: present
     enabled: true
     version: 6.43.5
-  - addon_name: kafka
-    addon_namespace: infrastructure
-    state: present
-    enabled: true
-    version: 0.9.0
   - addon_name: llm
     addon_namespace: kb-system
     state: absent
