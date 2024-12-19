@@ -12,23 +12,6 @@
         state: stopped
         enabled: false
 
-
-- name: Install squid on proxy host
-  hosts: proxy
-  become: true
-  gather_facts: false
-
-  tasks:
-
-    - name: Gathering facts
-      ansible.builtin.setup:
-        gather_subset: platform
-
-    - name: Install docker-ce
-      ansible.builtin.import_role:
-        name: geerlingguy.docker
-      tags: [docker]
-
 - name: Enable proxy
   hosts: k8s_cluster
   become: true
