@@ -91,8 +91,8 @@ kubeblocks_add_ons:
     version: 0.9.0
   - addon_name: redis
     addon_namespace: kb-system
-    state: absent
-    enabled: false
+    state: present
+    enabled: true
     version: 0.9.0
   - addon_name: snapshot-controller
     addon_namespace: kb-system
