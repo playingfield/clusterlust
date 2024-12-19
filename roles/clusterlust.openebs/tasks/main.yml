@@ -13,6 +13,7 @@
     mode: '0755'
 
 - name: Setup helm repository
+  become: false
   kubernetes.core.helm_repository:
     name: "{{ helm_repo_name }}"
     url: "{{ helm_repo_url }}"
