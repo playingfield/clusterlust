@@ -13,14 +13,12 @@
     mode: '0755'
 
 - name: Setup helm repository
-  become: false
   kubernetes.core.helm_repository:
     name: "{{ helm_repo_name }}"
     url: "{{ helm_repo_url }}"
     state: present
 
 - name: Install the OpenEBS  helm chart
-  become: false
   kubernetes.core.helm:
     name: "{{ helm_chart_name }}"
     chart_ref: "{{ helm_repo_name }}/{{ helm_chart_name }}"
