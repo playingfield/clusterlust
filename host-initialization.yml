@@ -1,11 +1,25 @@
 #!/usr/bin/env ansible-playbook
 ---
+- name: Network config
+  hosts: localhost
+  become: true
+  gather_facts: false
+  tags: [hostsfile]
+  tasks:
+    - name: Configure /etc/hosts
+      ansible.builtin.include_role:
+        name: clusterlust.hosts
 
 - name: Network config
   hosts: k8s_cluster
   become: true
   gather_facts: false
-  pre_tasks:
+  tags: [network]
+  tasks:
+    - name: Configure KubeBlocks
+      ansible.builtin.include_role:
+        name: clusterlust.kubeblocks
+
     - name: Disable firewalld
       ansible.builtin.systemd:
         name: firewalld
