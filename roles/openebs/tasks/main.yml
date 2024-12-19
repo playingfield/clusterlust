@@ -24,6 +24,7 @@
     release_namespace: "{{ ebs_namespace }}"
     create_namespace: true
     state: present
+    wait: true
     values:
       engines.replicated.mayastor.enabled: "{{ engines.replicated.mayastor.enabled }}"
       engines.local.zfs.enabled: "{{ engines.local.zfs.enabled }}"
