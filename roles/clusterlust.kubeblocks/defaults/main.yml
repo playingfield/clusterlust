@@ -1,3 +1,9 @@
 ---
 # no-op
 kubeblocks_clusters: []
+# kubeblocks_clusters:
+#   - kb_cluster_name: database
+#     kb_cluster_type: postgresql
+#     kb_cluster_version: postgresql-16.4.0
+#     options: '--cpu=0.5 --storage=10 --mode=replication'
+#     kb_cluster_ns: postgresql
