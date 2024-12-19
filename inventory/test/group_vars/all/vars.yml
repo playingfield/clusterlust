@@ -1,6 +1,4 @@
 ---
-cluster_admin: PSIAdmin
-cluster_admin_group: users
 docker_version: "docker-ce-26.1.0"
 ntp_enabled: true
 ntp_timezone: Europe/Amsterdam
