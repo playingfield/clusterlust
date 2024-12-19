@@ -1,7 +1,7 @@
 #!/usr/bin/env ansible-playbook
 ---
 - name: Network config
-  hosts: localhost
+  hosts: controller
   become: true
   gather_facts: false
   tags: [hostsfile]
