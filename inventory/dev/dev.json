@@ -1,7 +1,7 @@
 [
       {
         "name": "controller",
-        "autostart": true,
+        "autostart": false,
         "cpus": 4,
         "distro": "almalinux",
         "family": "RedHat",
