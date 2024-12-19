@@ -103,7 +103,7 @@ kubeblocks_add_ons:
     addon_namespace: kb-system
     state: present
     enabled: true
-    version: 0.8.41
+    version: 0.9.0
   - addon_name: victoria-metrics-agent
     addon_namespace: kb-system
     state: present
