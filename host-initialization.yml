@@ -12,6 +12,18 @@
         state: stopped
         enabled: false
 
+- name: Disable AD DNS
+  ansible.builtin.lineinfile:
+    path: /etc/resolv.conf
+    regexp: 'nameserver 10.0.0.205'
+    line: 'nameserver 10.0.0.205'
+    state: absent
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+    use: systemd
+
 - name: Enable proxy
   hosts: k8s_cluster
   become: true
