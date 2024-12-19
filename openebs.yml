@@ -3,7 +3,7 @@
 # ~/.kube/config should be valid
 - name: Manage Storage
   hosts: localhost
-  become: false
+  become: true
   tasks:
     - name: Manage Logical Volume Management
       ansible.builtin.debug:
