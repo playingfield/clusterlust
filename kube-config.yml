@@ -11,7 +11,7 @@
   tasks:
 
     - name: Create local config dirs
-      delegate_to: localhost
+      delegate_to: controller
       become: true
       ansible.builtin.file:
         path: "~{{ local_user }}/.kube"
@@ -30,7 +30,7 @@
         flat: true
 
     - name: Configure k8s master
-      delegate_to: localhost
+      delegate_to: controller
       become: true
       ansible.builtin.lineinfile:
         path: "~{{ local_user }}/.kube/config"
@@ -40,7 +40,7 @@
         mode: '0600'
 
     - name: Create local config dirs
-      delegate_to: localhost
+      delegate_to: controller
       become: true
       ansible.builtin.file:
         path: "~{{ cluster_admin | default('root') }}/.kube"
@@ -50,7 +50,7 @@
         mode: '0700'
 
     - name: Copy kube config to cluster
-      delegate_to: localhost
+      delegate_to: controller
       become: true
       ansible.builtin.copy:
         remote_src: true
