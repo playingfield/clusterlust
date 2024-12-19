@@ -1,0 +1,19 @@
+---
+# defaults file for bbaassssiiee.openebs
+helm_repo_name: openebs
+helm_repo_url: https://openebs.github.io/openebs
+helm_chart_name: openebs
+ebs_namespace: openebs
+
+base_path: /var/openebs/local
+mount_path: /mnt/openebs-local
+# values
+engines:
+  local:
+    lvm:
+      enabled: false
+    zfs:
+      enabled: false
+  replicated:
+    mayastor:
+      enabled: false
