@@ -1,0 +1,18 @@
+#!/usr/bin/env ansible-playbook
+---
+# ~/.kube/config should be valid
+- name: Manage Storage
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Manage Logical Volume Management
+      ansible.builtin.debug:
+        msg: 'Unimplemented'
+
+    - name: Manage ZFS
+      ansible.builtin.debug:
+        msg: 'Not available'
+
+    - name: Manage OpenEBS
+      ansible.builtin.include_role:
+        name: clusterlust.openebs
