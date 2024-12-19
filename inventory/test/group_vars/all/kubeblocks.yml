@@ -6,8 +6,8 @@ use_kubeblocks: true
 kubeblocks_add_ons:
   - addon_name: alertmanager-webhook-adaptor
     addon_namespace: kb-system
-    state: absent
-    enabled: false
+    state: present
+    enabled: true
     version: 0.1.4
   - addon_name: apecloud-mysql
     addon_namespace: kb-system
@@ -16,8 +16,8 @@ kubeblocks_add_ons:
     version: 0.9.0
   - addon_name: apecloud-otel-collector
     addon_namespace: kb-system
-    state: absent
-    enabled: false
+    state: present
+    enabled: true
     version: 0.1.2-beta.3
   - addon_name: aws-load-balancer-controller
     addon_namespace: kb-system
@@ -31,8 +31,8 @@ kubeblocks_add_ons:
     version: 4.5.0
   - addon_name: csi-hostpath-driver
     addon_namespace: kb-system
-    state: absent
-    enabled: false
+    state: present
+    enabled: enabled
     version: 0.7.0
   - addon_name: grafana
     addon_namespace: monitoring
@@ -99,10 +99,15 @@ kubeblocks_add_ons:
     state: present
     enabled: false
     version: 1.7.2
+  - addon_name: victoria-metrics
+    addon_namespace: kb-system
+    state: present
+    enabled: true
+    version: 0.8.41
   - addon_name: victoria-metrics-agent
     addon_namespace: kb-system
-    state: absent
-    enabled: false
+    state: present
+    enabled: true
     version: 0.8.41
   - addon_name: zookeeper
     addon_namespace: kb-system
