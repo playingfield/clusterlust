@@ -1,25 +1,28 @@
 ---
 # tasks file for bbaassssiiee.openebs
-- name: Ensure host path directory exists
-  ansible.builtin.file:
-    path: "{{ base_path }}"
-    state: directory
-    mode: '0755'
+- name: Configure OpenEBS
+  when: desired_state == 'present'
+  block:
+    - name: Ensure host path directory exists
+      ansible.builtin.file:
+        path: "{{ base_path }}"
+        state: directory
+        mode: '0755'
 
-- name: Ensure mount directory exists
-  ansible.builtin.file:
-    path: "{{ mount_path }}"
-    state: directory
-    mode: '0755'
+    - name: Ensure mount directory exists
+      ansible.builtin.file:
+        path: "{{ mount_path }}"
+        state: directory
+        mode: '0755'
 
-- name: Setup helm repository
-  kubernetes.core.helm_repository:
-    binary_path: "{{ helm_binary }}"
-    name: "{{ helm_repo_name }}"
-    url: "{{ helm_repo_url }}"
-    state: present
+    - name: Setup helm repository
+      kubernetes.core.helm_repository:
+        binary_path: "{{ helm_binary }}"
+        name: "{{ helm_repo_name }}"
+        url: "{{ helm_repo_url }}"
+        state: present
 
-- name: Install the OpenEBS  helm chart
+- name: Manage the OpenEBS  helm chart
   kubernetes.core.helm:
     binary_path: "{{ helm_binary }}"
     create_namespace: true
@@ -28,6 +31,14 @@
     release_namespace: "{{ ebs_namespace }}"
     release_values: "{{ openebs_release_values }}"
     reuse_values: true
-    state: present
+    state: "{{ desired_state }}"
     update_repo_cache: true
     wait: true
+
+- name: Remove helm repository
+  when: desired_state == 'absent'
+  kubernetes.core.helm_repository:
+    binary_path: "{{ helm_binary }}"
+    name: "{{ helm_repo_name }}"
+    url: "{{ helm_repo_url }}"
+    state: absent
