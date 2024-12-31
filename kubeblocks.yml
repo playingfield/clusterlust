@@ -4,6 +4,9 @@
 - name: Manage KubeBlocks
   hosts: localhost
   become: false
+  vars:
+    # Semaphore does not pass $HOME so path needs to be set explicitly.
+    k8s_auth_kubeconfig: /home/semapphore/.kube/config
   tasks:
     - name: Install KubeBlocks
       ansible.builtin.include_role:

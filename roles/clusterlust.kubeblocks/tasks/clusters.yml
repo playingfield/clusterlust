@@ -6,5 +6,7 @@
     state: present
 
 - name: "Create {{ item.kb_cluster_type }} cluster {{ item.kb_cluster_name }}"
+  environment:
+    K8S_AUTH_KUBECONFIG: "{{ k8s_auth_kubeconfig }}"
   ansible.builtin.command:
     cmd: "kbcli cluster create {{ item.kb_cluster_type }} --version={{ item.kb_cluster_version }} {{ item.options }} {{ item.kb_cluster_name }} -n {{ item.kb_cluster_ns }}"
