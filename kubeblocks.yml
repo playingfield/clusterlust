@@ -13,7 +13,7 @@
       ansible.builtin.include_role:
         name: bbaassssiiee.kubeblocks
       vars:
-        use_kubeblocks: true
+        use_kb_addons: true
 
     - name: Configure KubeBlocks
       ansible.builtin.include_role:
