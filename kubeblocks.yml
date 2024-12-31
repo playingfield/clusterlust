@@ -7,7 +7,7 @@
   vars:
     # manage add-ons
     # Semaphore does not pass $HOME so path needs to be set explicitly.
-    k8s_auth_kubeconfig: /home/semapphore/.kube/config
+    k8s_auth_kubeconfig: /home/semaphore/.kube/config
   tasks:
     - name: Install KubeBlocks
       ansible.builtin.include_role:
