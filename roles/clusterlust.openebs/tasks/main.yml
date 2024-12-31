@@ -22,10 +22,12 @@
 - name: Install the OpenEBS  helm chart
   kubernetes.core.helm:
     binary_path: "{{ helm_binary }}"
-    name: "{{ helm_chart_name }}"
-    chart_ref: "{{ helm_repo_name }}/{{ helm_chart_name }}"
-    update_repo_cache: true
-    release_namespace: "{{ ebs_namespace }}"
     create_namespace: true
+    chart_ref: "{{ helm_repo_name }}/{{ helm_chart_name }}"
+    name: "{{ helm_chart_name }}"
+    release_namespace: "{{ ebs_namespace }}"
+    release_values: "{{ openebs_release_values }}"
+    reuse_values: true
     state: present
+    update_repo_cache: true
     wait: true

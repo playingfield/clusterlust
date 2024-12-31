@@ -6,15 +6,19 @@ helm_repo_url: https://openebs.github.io/openebs
 helm_chart_name: openebs
 ebs_namespace: openebs
 
+
+openebs_release_values:
+  openebs-crds.csi.volumeSnapshots.enable: false
+  engines:
+    local:
+      lvm:
+        enabled: true
+      zfs:
+        enabled: false
+    replicated:
+      mayastor:
+        enabled: false
+
 base_path: /var/openebs/local
 mount_path: /mnt/openebs-local
 # values
-engines:
-  local:
-    lvm:
-      enabled: false
-    zfs:
-      enabled: false
-  replicated:
-    mayastor:
-      enabled: false
