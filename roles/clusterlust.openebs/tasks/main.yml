@@ -14,14 +14,14 @@
 
 - name: Setup helm repository
   kubernetes.core.helm_repository:
-    binary_path: /usr/local/bin
+    binary_path: "{{ helm_binary }}"
     name: "{{ helm_repo_name }}"
     url: "{{ helm_repo_url }}"
     state: present
 
 - name: Install the OpenEBS  helm chart
   kubernetes.core.helm:
-    binary_path: /usr/local/bin
+    binary_path: "{{ helm_binary }}"
     name: "{{ helm_chart_name }}"
     chart_ref: "{{ helm_repo_name }}/{{ helm_chart_name }}"
     update_repo_cache: true

@@ -1,5 +1,6 @@
 ---
 # defaults file for bbaassssiiee.openebs
+helm_binary: /usr/local/bin/helm
 helm_repo_name: openebs
 helm_repo_url: https://openebs.github.io/openebs
 helm_chart_name: openebs
