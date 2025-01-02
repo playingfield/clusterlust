@@ -20,3 +20,7 @@
 - name: Configure OpenEBS
   become: true
   ansible.builtin.import_playbook: openebs.yml
+
+- name: Install KubeBlocks
+  become: true
+  ansible.builtin.import_playbook: kubeblocks.yml
