@@ -1,0 +1,15 @@
+---
+- name: Configure OpenEBS
+  when: desired_state == 'present'
+  block:
+    - name: Ensure host path directory exists
+      ansible.builtin.file:
+        path: "{{ base_path }}"
+        state: directory
+        mode: '0755'
+
+    - name: Ensure mount directory exists
+      ansible.builtin.file:
+        path: "{{ mount_path }}"
+        state: directory
+        mode: '0755'

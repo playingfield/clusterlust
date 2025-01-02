@@ -1,26 +1,11 @@
 ---
-# tasks file for bbaassssiiee.openebs
-- name: Configure OpenEBS
+- name: Setup helm repository
   when: desired_state == 'present'
-  block:
-    - name: Ensure host path directory exists
-      ansible.builtin.file:
-        path: "{{ base_path }}"
-        state: directory
-        mode: '0755'
-
-    - name: Ensure mount directory exists
-      ansible.builtin.file:
-        path: "{{ mount_path }}"
-        state: directory
-        mode: '0755'
-
-    - name: Setup helm repository
-      kubernetes.core.helm_repository:
-        binary_path: "{{ helm_binary }}"
-        name: "{{ helm_repo_name }}"
-        url: "{{ helm_repo_url }}"
-        state: present
+  kubernetes.core.helm_repository:
+    binary_path: "{{ helm_binary }}"
+    name: "{{ helm_repo_name }}"
+    url: "{{ helm_repo_url }}"
+    state: present
 
 - name: Manage the OpenEBS  helm chart
   kubernetes.core.helm:

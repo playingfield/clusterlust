@@ -1,0 +1,5 @@
+---
+# Logical Volume Management tasks
+- name: Manage LVM
+  ansible.builtin.debug:
+    msg: TODO

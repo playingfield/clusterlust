@@ -1,0 +1,11 @@
+---
+# ZFS owned by Oracle, expect legal issues.
+- name: Manage LVM
+  when: ansible_os_family == 'RedHat'
+  ansible.builtin.debug:
+    msg: Unavailable
+
+- name: Manage LVM
+  when: ansible_os_distribution == 'Ubuntu'
+  ansible.builtin.debug:
+    msg: Unimplemented

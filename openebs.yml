@@ -2,17 +2,29 @@
 ---
 # ~/.kube/config should be valid
 - name: Manage Storage
-  hosts: localhost
+  hosts: kube_node
   become: true
   tasks:
     - name: Manage Logical Volume Management
-      ansible.builtin.debug:
-        msg: 'Unimplemented'
+      ansible.builtin.include_role:
+        name: clusterlust.openebs
+        tasks_from: lvm
 
     - name: Manage ZFS
-      ansible.builtin.debug:
-        msg: 'Not available'
+      ansible.builtin.include_role:
+        name: clusterlust.openebs
+        tasks_from: zfs
 
     - name: Manage OpenEBS
       ansible.builtin.include_role:
         name: clusterlust.openebs
+        tasks_from: preparation
+
+- name: Manage Storage
+  hosts: kube_node
+  become: true
+  tasks:
+    - name: Manage OpenEBS
+      ansible.builtin.include_role:
+        name: clusterlust.openebs
+        tasks_from: installation
