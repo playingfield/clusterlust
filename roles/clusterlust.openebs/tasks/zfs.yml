@@ -6,6 +6,6 @@
     msg: Unavailable
 
 - name: Manage LVM
-  when: ansible_os_distribution == 'Ubuntu'
+  when: ansible_distribution == 'Ubuntu'
   ansible.builtin.debug:
     msg: Unimplemented
