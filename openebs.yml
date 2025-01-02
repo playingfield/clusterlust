@@ -22,7 +22,7 @@
         tasks_from: preparation
 
 - name: Manage Storage
-  hosts: kube_node
+  hosts: localhost
   become: true
   gather_facts: true
   tasks:
