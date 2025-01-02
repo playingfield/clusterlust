@@ -3,7 +3,7 @@
 # ~/.kube/config should be valid
 - name: Manage KubeBlocks
   hosts: localhost
-  become: false
+  become: true
   vars:
     # Semaphore does not pass $HOME so path needs to be set explicitly.
     k8s_auth_kubeconfig: /home/semaphore/.kube/config
