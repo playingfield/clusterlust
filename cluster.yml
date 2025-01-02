@@ -12,4 +12,11 @@
 - name: Install Kubernetes
   become: true
   ansible.builtin.import_playbook: kubernetes_sigs.kubespray.cluster
-  tags: kubernetes
+
+- name: Copy .kube/config
+  become: true
+  ansible.builtin.import_playbook: kube-config.yml
+
+- name: Configure OpenEBS
+  become: true
+  ansible.builtin.import_playbook: openebs.yml
