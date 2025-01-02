@@ -5,7 +5,7 @@ helm_repo_name: openebs
 helm_repo_url: https://openebs.github.io/openebs
 helm_chart_name: openebs
 ebs_namespace: openebs
-desired_state: true
+desired_state: present
 
 openebs_release_values:
   openebs-crds.csi.volumeSnapshots.enable: false
