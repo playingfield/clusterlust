@@ -1,3 +1,4 @@
 .vagrant
 .vscode
 roles/bbaassssiiee.*
+files/kubeblocks_crds.yaml
