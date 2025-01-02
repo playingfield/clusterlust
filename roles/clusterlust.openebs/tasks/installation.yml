@@ -20,6 +20,11 @@
     update_repo_cache: true
     wait: true
 
+- name: Manage StorageClass
+  kubernetes.core.k8s:
+    state: "{{ desired_state }}"
+    src: local-hostpath-sc.yaml
+
 - name: Remove helm repository
   when: desired_state == 'absent'
   kubernetes.core.helm_repository:
