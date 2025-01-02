@@ -4,6 +4,7 @@
 - name: Manage Storage
   hosts: kube_node
   become: true
+  gather_facts: true
   tasks:
     - name: Manage Logical Volume Management
       ansible.builtin.include_role:
@@ -23,6 +24,7 @@
 - name: Manage Storage
   hosts: kube_node
   become: true
+  gather_facts: true
   tasks:
     - name: Manage OpenEBS
       ansible.builtin.include_role:
