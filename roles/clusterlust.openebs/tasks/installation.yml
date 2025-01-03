@@ -1,4 +1,17 @@
 ---
+- name: "Setting desired_state: {{ desired_state }}"
+  ansible.builtin.debug:
+    msg: |
+      helm_binary: {{ helm_binary }}
+      helm_repo_name: {{ helm_repo_name }}
+      helm_repo_url: {{ helm_repo_url }}
+      helm_chart_name: {{ helm_chart_name }}
+      ebs_namespace: {{ ebs_namespace }}
+      desired_state: {{ desired_state }}
+      pvc_size: {{ pvc_size }}
+      openebs_release_values:
+        {{ openebs_release_values }}
+
 - name: Setup helm repository
   when: desired_state == 'present'
   kubernetes.core.helm_repository:
