@@ -1,0 +1,3 @@
+---
+base_path: /var/openebs/local
+mount_path: /mnt/openebs-local
