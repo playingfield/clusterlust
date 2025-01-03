@@ -20,6 +20,17 @@
     update_repo_cache: true
     wait: true
 
+- name: Remove PersistentVolumeClaim
+  when: desired_state == 'absent'
+  kubernetes.core.k8s:
+    state: absent
+    namespace: "{{ ebs_namespace }}"
+    definition:
+      kind: PersistentVolumeClaim
+      apiVersion: v1
+      metadata:
+        name: local-hostpath-pvc
+
 - name: Manage Default StorageClass
   kubernetes.core.k8s:
     state: "{{ desired_state }}"
@@ -49,9 +60,10 @@
               values: "{{ groups['kube_node'] | map('extract', hostvars, 'inventory_hostname') | list }}"
 
 
-- name: Manage PersistentVolumeClaim
+- name: Create PersistentVolumeClaim
+  when: desired_state == 'present'
   kubernetes.core.k8s:
-    state: "{{ desired_state }}"
+    state: present
     namespace: "{{ ebs_namespace }}"
     definition:
       kind: PersistentVolumeClaim
