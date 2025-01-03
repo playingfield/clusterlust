@@ -52,6 +52,7 @@
 - name: Manage PersistentVolumeClaim
   kubernetes.core.k8s:
     state: "{{ desired_state }}"
+    namespace: "{{ ebs_namespace }}"
     definition:
       kind: PersistentVolumeClaim
       apiVersion: v1
