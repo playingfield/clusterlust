@@ -44,10 +44,26 @@
       reclaimPolicy: Delete
       volumeBindingMode: WaitForFirstConsumer
       allowedTopologies:
-      - matchLabelExpressions:
-        - key: kubernetes.io/hostname
-          values: "{{ groups['kube_node'] | map('extract', hostvars, 'inventory_hostname') | list }}"
+        - matchLabelExpressions:
+            - key: kubernetes.io/hostname
+              values: "{{ groups['kube_node'] | map('extract', hostvars, 'inventory_hostname') | list }}"
 
+
+- name: Manage PersistentVolumeClaim
+  kubernetes.core.k8s:
+    state: "{{ desired_state }}"
+    definition:
+      kind: PersistentVolumeClaim
+      apiVersion: v1
+      metadata:
+        name: local-hostpath-pvc
+      spec:
+        storageClassName: openebs-hostpath
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: "{{ pvc_size }}"
 
 - name: Remove helm repository
   when: desired_state == 'absent'

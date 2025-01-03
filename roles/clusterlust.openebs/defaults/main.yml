@@ -1,5 +1,4 @@
 ---
-# defaults file for bbaassssiiee.openebs
 helm_binary: /usr/local/bin/helm
 helm_repo_name: openebs
 helm_repo_url: https://openebs.github.io/openebs
@@ -7,6 +6,8 @@ helm_chart_name: openebs
 ebs_namespace: openebs
 desired_state: present
 
+# values
+pvc_size: 10G
 openebs_release_values:
   openebs-crds.csi.volumeSnapshots.enable: false
   engines:
@@ -21,4 +22,3 @@ openebs_release_values:
 
 base_path: /var/openebs/local
 mount_path: /mnt/openebs-local
-# values
