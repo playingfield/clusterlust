@@ -55,7 +55,6 @@
     definition:
       kind: PersistentVolumeClaim
       apiVersion: v1
-      namespace: default
       metadata:
         name: local-hostpath-pvc
       spec:
