@@ -80,7 +80,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "preparation.yml"
+    ansible.playbook = "host-initialization.yml"
     ansible.compatibility_mode = "2.0"
     ansible.inventory_path = "inventory/" + $Stage + "/hosts"
     ansible.galaxy_role_file = "roles/requirements.yml"
