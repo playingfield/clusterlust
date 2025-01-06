@@ -5,6 +5,8 @@ helm_repo_url: https://openebs.github.io/openebs
 helm_chart_name: openebs
 ebs_namespace: openebs
 desired_state: present
+base_path: /var/openebs/local
+mount_path: /mnt/openebs-local
 
 # values
 pvc_size: 10G
@@ -19,6 +21,3 @@ openebs_release_values:
     replicated:
       mayastor:
         enabled: false
-
-base_path: /var/openebs/local
-mount_path: /mnt/openebs-local
