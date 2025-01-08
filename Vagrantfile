@@ -60,6 +60,8 @@ Vagrant.configure(2) do |config|
       end
       srv.vm.provider :vmware_desktop do |vmware|
         vmware.gui = guest['gui']
+        vmware.vmx["ethernet0.pcislotnumber"] = "160"
+        vmware.vmx["ethernet1.pcislotnumber"] = "192"
         vmware.vmx['memsize'] = guest['memory']
         vmware.vmx['numvcpus'] =  guest['cpus']
       end
