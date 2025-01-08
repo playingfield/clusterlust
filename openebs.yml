@@ -23,7 +23,7 @@
 
 - name: Manage Storage
   hosts: localhost
-  become: true
+  become: false
   gather_facts: true
   tasks:
     - name: Manage OpenEBS
