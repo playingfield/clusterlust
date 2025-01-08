@@ -5,7 +5,7 @@
   hosts: localhost
   become: true
   vars:
-    # Semaphore does not pass $HOME so path needs to be set explicitly.
+    # Semaphore does not pass $HOME so K8S_AUTH_KUBECONFIG needs to be set.
     k8s_auth_kubeconfig: /home/semaphore/.kube/config
     # To use KubeBlocks addons set this Boolean
     #use_kb_addons: true

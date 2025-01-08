@@ -21,6 +21,8 @@
     state: present
 
 - name: Manage the OpenEBS  helm chart
+  environment:
+    K8S_AUTH_KUBECONFIG: "{{ k8s_auth_kubeconfig }}"
   kubernetes.core.helm:
     binary_path: "{{ helm_binary }}"
     create_namespace: true

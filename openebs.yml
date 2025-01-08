@@ -5,6 +5,9 @@
   hosts: kube_node
   become: true
   gather_facts: true
+  vars:
+    # Semaphore does not pass $HOME so K8S_AUTH_KUBECONFIG needs to be set.
+    k8s_auth_kubeconfig: /home/semaphore/.kube/config
   tasks:
     - name: Manage Logical Volume Management
       ansible.builtin.include_role:
