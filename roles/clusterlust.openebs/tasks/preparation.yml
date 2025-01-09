@@ -6,6 +6,12 @@
       ansible.builtin.file:
         path: "{{ base_path }}"
         state: directory
+        mode: '0700'
+
+    - name: Ensure local path exists
+      ansible.builtin.file:
+        path: "{{ base_path }}/local"
+        state: directory
         mode: '0755'
 
     - name: Ensure mount directory exists
@@ -13,3 +19,10 @@
         path: "{{ mount_path }}"
         state: directory
         mode: '0755'
+
+    - name: Ensure sparse file is created
+      when: openebs_release_values.engines.local.lvm | bool
+      ansible.builtin.command:
+        cmd: "truncate -s {{ disk_size }} {{ base_path }}/lvm.img"
+        args:
+          creates: "{{ base_path }}/disk.img"

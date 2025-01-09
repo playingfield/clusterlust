@@ -1,5 +1,17 @@
 ---
 # Logical Volume Management tasks
-- name: Manage LVM
-  ansible.builtin.debug:
-    msg: TODO
+- name: Ensure LVM package is installed
+  ansible.builtin.package:
+    name: lvm2
+    state: present
+
+- name: Load dm-snapshot kernel module
+  ansible.builtin.kernel_module:
+    name: dm-snapshot
+    state: present
+
+- name: Make dm-snapshot module persistent
+  ansible.builtin.lineinfile:
+    path: /etc/modules-load.d/dm-snapshot.conf
+    line: dm-snapshot
+    create: true

@@ -6,20 +6,22 @@
   become: true
   gather_facts: true
   tasks:
-    - name: Manage Logical Volume Management
+    - name: Manage OpenEBS
+      ansible.builtin.include_role:
+        name: clusterlust.openebs
+        tasks_from: preparation
+
+    - name: Manage LVM
+      when: openebs_release_values.engines.local.lvm | bool
       ansible.builtin.include_role:
         name: clusterlust.openebs
         tasks_from: lvm
 
     - name: Manage ZFS
+      when: openebs_release_values.engines.local.zfs | bool
       ansible.builtin.include_role:
         name: clusterlust.openebs
         tasks_from: zfs
-
-    - name: Manage OpenEBS
-      ansible.builtin.include_role:
-        name: clusterlust.openebs
-        tasks_from: preparation
 
 - name: Manage Storage
   hosts: localhost
