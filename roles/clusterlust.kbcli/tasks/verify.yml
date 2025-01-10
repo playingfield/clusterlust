@@ -3,7 +3,7 @@
 - name: "State variable - {{ desired_state }}"
   ansible.builtin.include_vars: "{{ desired_state }}.yml"
 
-- name: "Display {{ package_clause }}"
+- name: "Plan: {{ package_clause }}"
   ansible.builtin.assert:
     that: package_clause is defined
 
@@ -11,7 +11,7 @@
   ansible.builtin.package_facts:
   no_log: true
 
-- name: Assert package is in desired_state
+- name: "Test: {{ package_clause }}"
   ansible.builtin.assert:
     quiet: true
     that:
