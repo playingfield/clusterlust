@@ -10,10 +10,6 @@
     # To use KubeBlocks addons set this Boolean
     #use_kb_addons: true
   tasks:
-    - name: Install KubeBlocks
-      ansible.builtin.include_role:
-        name: bbaassssiiee.kubeblocks
-
     - name: Configure KubeBlocks
       ansible.builtin.include_role:
         name: clusterlust.kubeblocks

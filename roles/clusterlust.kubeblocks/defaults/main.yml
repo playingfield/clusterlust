@@ -1,9 +1,62 @@
 ---
-# no-op
-kubeblocks_clusters: []
-# kubeblocks_clusters:
-#   - kb_cluster_name: database
-#     kb_cluster_type: postgresql
-#     kb_cluster_version: postgresql-16.4.0
-#     options: '--cpu=0.5 --storage=10 --mode=replication'
-#     kb_cluster_ns: postgresql
+# kbcli
+kbcli_releases_url: 'https://api.github.com/repos/apecloud/kbcli/releases/latest'
+kbcli_repo_url: 'https://github.com/apecloud/kbcli/releases/download'
+use_kbcli: true
+# set true when k8s is up
+use_kubeblocks: false
+desired_state: present
+verify_state: true
+kbcli_download_package: true
+kbcli_path: /usr/local/bin
+# Semaphore does not pass $HOME so path might need to be more explicit.
+k8s_auth_kubeconfig: "{{ lookup('env', 'HOME') }}/.kube/config"
+# KubeBlocks
+crd_url: 'https://github.com/apecloud/kubeblocks/releases/download/v0.9.2/kubeblocks_crds.yaml'
+helm_repo_url: 'https://apecloud.github.io/helm-charts'
+helm_binary: /usr/local/bin/helm
+# KubeBlocks configuration depends on this Boolean:
+use_kb_addons: false
+
+# state: absent removes addons, TODO disabling/enabling
+kubeblocks_add_ons:
+  - addon_name: apecloud-mysql
+    state: absent
+    enabled: false
+    version: 0.9.0
+  - addon_name: aws-load-balancer-controller
+    state: absent
+    enabled: false
+    version: 1.4.8
+  - addon_name: kafka
+    state: present
+    enabled: true
+    version: 0.9.0
+  - addon_name: llm
+    state: present
+    enabled: false
+    version: 0.9.0
+  - addon_name: mongodb
+    state: absent
+    enabled: false
+    version: 0.9.1
+  - addon_name: mysql
+    state: absent
+    enabled: false
+    version: 0.9.3
+  - addon_name: postgresql
+    state: present
+    enabled: true
+    version: 0.9.0
+  - addon_name: pulsar
+    state: present
+    enabled: false
+    version: 0.9.1
+  - addon_name: qdrant
+    state: present
+    enabled: false
+    version: 0.9.1
+  - addon_name: redis
+    state: present
+    enabled: true
+    version: 0.9.0

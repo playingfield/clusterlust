@@ -1,0 +1,14 @@
+# Verify desired state, both absent and present can be verified.
+---
+- name: "State variables - {{ desired_state }}"
+  ansible.builtin.include_vars: "{{ desired_state }}.yml"
+
+- name: Gather package facts
+  ansible.builtin.package_facts:
+  no_log: true
+
+- name: Assert package is in desired_state
+  ansible.builtin.assert:
+    quiet: true
+    that:
+      - "'kbcli' {{ package_clause }} ansible_facts.packages"

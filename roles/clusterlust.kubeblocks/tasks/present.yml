@@ -1,0 +1,18 @@
+---
+# when: desired_state == 'present'
+
+# Works
+- name: Install kbcli
+  when: use_kbcli | bool
+  ansible.builtin.include_tasks: "kbcli.yml"
+
+# Works
+- name: Install KubeBlocks
+  when: use_kubeblocks | bool
+  ansible.builtin.include_tasks: "kubeblocks.yml"
+
+# This needs more development
+- name: Manage KubeBlocks Add-ons
+  when: use_kb_addons | bool
+  ansible.builtin.include_tasks: "addons.yml"
+  loop: "{{ kubeblocks_add_ons }}"
