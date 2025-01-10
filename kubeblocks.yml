@@ -1,10 +1,11 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Manage kbcli
+- name: Install kbcli
   hosts: controller
   become: true
   tasks:
     - name: Configure KubeBlocks
+      when: desired_state == 'present'
       ansible.builtin.include_role:
         name: clusterlust.kbcli
 
@@ -21,3 +22,12 @@
     - name: Configure KubeBlocks
       ansible.builtin.include_role:
         name: clusterlust.kubeblocks
+
+- name: Remove kbcli
+  hosts: controller
+  become: true
+  tasks:
+    - name: Configure KubeBlocks
+      when: desired_state == 'absent'
+      ansible.builtin.include_role:
+        name: clusterlust.kbcli
