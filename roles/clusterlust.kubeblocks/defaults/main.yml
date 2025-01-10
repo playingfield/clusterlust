@@ -2,7 +2,6 @@
 # set true when k8s is up
 use_kubeblocks: false
 desired_state: present
-verify_state: true
 # Semaphore does not pass $HOME so path might need to be more explicit.
 k8s_auth_kubeconfig: "{{ lookup('env', 'HOME') }}/.kube/config"
 # KubeBlocks

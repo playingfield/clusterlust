@@ -1,7 +1,9 @@
 # kbcli
+desired_state: present
+verify_state: true
+use_kbcli: true
+kbcli_download_package: true
+
 kbcli_releases_url: 'https://api.github.com/repos/apecloud/kbcli/releases/latest'
 kbcli_repo_url: 'https://github.com/apecloud/kbcli/releases/download'
-use_kbcli: true
-desired_state: present
-kbcli_download_package: true
 kbcli_path: /usr/local/bin
