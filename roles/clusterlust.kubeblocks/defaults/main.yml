@@ -1,14 +1,8 @@
 ---
-# kbcli
-kbcli_releases_url: 'https://api.github.com/repos/apecloud/kbcli/releases/latest'
-kbcli_repo_url: 'https://github.com/apecloud/kbcli/releases/download'
-use_kbcli: true
 # set true when k8s is up
 use_kubeblocks: false
 desired_state: present
 verify_state: true
-kbcli_download_package: true
-kbcli_path: /usr/local/bin
 # Semaphore does not pass $HOME so path might need to be more explicit.
 k8s_auth_kubeconfig: "{{ lookup('env', 'HOME') }}/.kube/config"
 # KubeBlocks
