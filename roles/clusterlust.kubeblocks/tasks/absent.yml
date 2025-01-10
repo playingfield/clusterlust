@@ -1,10 +1,5 @@
 ---
+# when: desired_state == 'absent'
 - name: Remove KubeBlocks
   when: use_kubeblocks | bool
   ansible.builtin.include_tasks: "kubeblocks.yml"
-
-- name: Remove kbcli
-  when: use_kbcli | bool
-  ansible.builtin.package:
-    name: kbcli
-    state: absent

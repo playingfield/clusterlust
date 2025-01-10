@@ -1,14 +1,22 @@
 #!/usr/bin/env ansible-playbook
 ---
-# ~/.kube/config should be valid
-- name: Manage KubeBlocks
+- name: Manage kbcli
   hosts: controller
   become: true
+  tasks:
+    - name: Configure KubeBlocks
+      ansible.builtin.include_role:
+        name: clusterlust.kbcli
+
+- name: Manage KubeBlocks
+  hosts: localhost
+  become: false
+  connection: local
   vars:
     # Semaphore does not pass $HOME so K8S_AUTH_KUBECONFIG needs to be set.
     k8s_auth_kubeconfig: /home/semaphore/.kube/config
-    # To use KubeBlocks addons set this Boolean
-    #use_kb_addons: true
+    # To manage KubeBlocks addons set this Boolean
+    # use_kb_addons: true
   tasks:
     - name: Configure KubeBlocks
       ansible.builtin.include_role:

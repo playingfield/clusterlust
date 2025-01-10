@@ -1,0 +1,7 @@
+---
+
+- name: Remove kbcli
+  when: use_kbcli | bool
+  ansible.builtin.package:
+    name: kbcli
+    state: absent
