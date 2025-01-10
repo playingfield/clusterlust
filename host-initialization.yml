@@ -16,10 +16,6 @@
   gather_facts: false
   tags: [network]
   tasks:
-    - name: Configure KubeBlocks
-      ansible.builtin.include_role:
-        name: clusterlust.kubeblocks
-
     - name: Disable firewalld
       ansible.builtin.systemd:
         name: firewalld
