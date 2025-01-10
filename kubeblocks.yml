@@ -5,7 +5,7 @@
   become: true
   tasks:
     - name: Configure KubeBlocks
-      when: desired_state == 'present'
+      when: (desired_state is not defined) or (desired_state == 'present')
       ansible.builtin.include_role:
         name: clusterlust.kbcli
 
@@ -28,6 +28,6 @@
   become: true
   tasks:
     - name: Configure KubeBlocks
-      when: desired_state == 'absent'
+      when: (desired_state is defined) and (desired_state == 'absent')
       ansible.builtin.include_role:
         name: clusterlust.kbcli
