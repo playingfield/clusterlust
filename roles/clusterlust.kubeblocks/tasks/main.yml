@@ -1,6 +1,9 @@
 ---
-- name: Install KubeBlock clusters
-  when:
-    - kubeblocks_clusters|length >= 1
-  ansible.builtin.include_tasks: clusters.yml
-  loop: "{{ kubeblocks_clusters }}"
+# Main tasks entry point for the role
+
+- name: "Converge state - {{ desired_state }}"
+  ansible.builtin.include_tasks: "{{ desired_state }}.yml"
+
+- name: "Verify state - {{ desired_state }}"
+  ansible.builtin.include_tasks: verify.yml
+  when: verify_state | bool

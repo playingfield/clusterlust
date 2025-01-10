@@ -1,0 +1,5 @@
+---
+crd_manifest: kubeblocks_crds.yaml
+helm_repo_name: kubeblocks
+helm_chart_name: kubeblocks
+namespace: kb-system
