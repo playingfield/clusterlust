@@ -9,7 +9,9 @@
   become: true
   collections:
     - kubernetes_sigs.kubespray
-
+  vars:
+    kube_config_dir: /etc/kubernetes
+    containerd_storage_dir: /var/lib/containerd
   tasks:
     - ansible.builtin.include_role:
         name: kubespray-defaults
