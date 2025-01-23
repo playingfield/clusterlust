@@ -7,24 +7,35 @@
   hosts: etcd:k8s_cluster:calico_rr
   gather_facts: true
   become: true
+
   collections:
     - kubernetes_sigs.kubespray
-  vars:
-    kube_config_dir: /etc/kubernetes
-    containerd_storage_dir: /var/lib/containerd
+
   tasks:
-    - ansible.builtin.include_role:
+    - name: Set Kubespray defaults
+      ansible.builtin.include_role:
         name: kubespray-defaults
 
-    - ansible.builtin.include_role:
+    - name: Run Kubespray reset role
+      ansible.builtin.include_role:
         name: reset
+      vars:
+        bin_dir: /usr/bin
+        containerd_storage_dir: /var/lib/containerd
+        deploy_container_engine: true
+        etcd_config_dir: /etc/ssl/etcd
+        etcd_data_dir: /var/lib/etcd
+        etcd_events_data_dir: /var/lib/etcd-events
+        kube_config_dir: /etc/kubernetes
+        krew_root_dir: /usr/local/krew
+        nginx_config_dir: /etc/nginx
 
-    - ansible.builtin.command:
+    - name: Kubeadm reset with force
+      ansible.builtin.command:
         cmd: kubeadm reset -f
+      changed_when: true
 
-    - ansible.builtin.file:
-        path: "{{ item }}"
+    - name: Remove /etc/cni/net.d
+      ansible.builtin.file:
+        path: /etc/cni/net.d
         state: absent
-      loop:
-        - /etc/kubernetes
-        - /etc/cni/net.d
