@@ -1,5 +1,0 @@
----
-# when: desired_state == 'absent'
-- name: Remove KubeBlocks
-  when: use_kubeblocks | bool
-  ansible.builtin.include_tasks: "kubeblocks.yml"
