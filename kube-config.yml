@@ -124,7 +124,7 @@
       changed_when: false
       register: helm_completion
       check_mode: false
-      no_log: true
+      no_log: "{{ not debug }}"
 
     - name: Install helm completion
       become: true
