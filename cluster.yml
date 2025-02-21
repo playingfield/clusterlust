@@ -1,26 +1,20 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Common
+- name: Manage Kubernetes cluster
   hosts: all:!localhost:!bastion
   become: true
   gather_facts: false
+
   pre_tasks:
-    - name: Set hostname
+
+    - name: Set hostname from Ansible inventory
       ansible.builtin.hostname:
         name: "{{ inventory_hostname }}"
 
+# https://kubespray.io/#/
 - name: Install Kubernetes
-  become: true
   ansible.builtin.import_playbook: kubernetes_sigs.kubespray.cluster
 
+# To run k9s and playbooks on controller host
 - name: Copy .kube/config
-  become: true
   ansible.builtin.import_playbook: kube-config.yml
-
-- name: Configure OpenEBS
-  become: true
-  ansible.builtin.import_playbook: openebs.yml
-
-- name: Install KubeBlocks
-  become: true
-  ansible.builtin.import_playbook: kubeblocks.yml
