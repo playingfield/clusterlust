@@ -3,6 +3,13 @@
 - name: Install kbcli
   hosts: controller
   become: true
+  tags: [kbcli]
+
+  pre_tasks:
+    - name: Log desired_state
+      ansible.builtin.debug:
+        msg: "{{ desired_state }}"
+
   tasks:
     - name: Configure KubeBlocks
       when: (desired_state is not defined) or (desired_state == 'present')
@@ -16,8 +23,12 @@
   vars:
     # Semaphore does not pass $HOME so K8S_AUTH_KUBECONFIG needs to be set.
     k8s_auth_kubeconfig: /home/semaphore/.kube/config
-    # To manage KubeBlocks addons set this Boolean
-    # use_kb_addons: true
+
+  pre_tasks:
+    - name: Log desired_state
+      ansible.builtin.debug:
+        msg: "{{ desired_state }}"
+
   tasks:
     - name: Configure KubeBlocks
       ansible.builtin.include_role:
@@ -26,8 +37,9 @@
 - name: Remove kbcli
   hosts: controller
   become: true
+  tags: [kbcli]
   tasks:
-    - name: Configure KubeBlocks
+    - name: Remove kbcli
       when: (desired_state is defined) and (desired_state == 'absent')
       ansible.builtin.include_role:
         name: clusterlust.kbcli
