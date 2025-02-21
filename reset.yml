@@ -39,3 +39,24 @@
       ansible.builtin.file:
         path: /etc/cni/net.d
         state: absent
+
+- name: Reset cluster
+  hosts: k8s_cluster
+  gather_facts: true
+
+  tasks:
+    - name: Clear kube config dir
+      become: true
+      ansible.builtin.file:
+        path: /root/.kube
+        state: absent
+
+    - name: Clear kube config dir
+      become: false
+      ansible.builtin.file:
+        path: .kube
+        state: absent
+
+    - name: Reboot
+      become: true
+      ansible.builtin.reboot:
