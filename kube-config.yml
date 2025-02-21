@@ -120,7 +120,7 @@
           complete -F __start_kubectl k
 
     - name: Get helm completion
-      ansible.builtin.command: "/usr/bin/helm completion bash"
+      ansible.builtin.command: "/usr/local/bin/helm completion bash"
       changed_when: false
       register: helm_completion
       check_mode: false
