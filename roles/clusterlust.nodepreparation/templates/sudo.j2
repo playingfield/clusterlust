@@ -1,0 +1,2 @@
+# Ansible synchronize uses rsync which requires NOPASSWD
+{{ cluster_admin | default('admin') }} ALL=(ALL) NOPASSWD:ALL

@@ -1,4 +1,9 @@
 ---
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+    use: systemd
+
 - name: Create /etc/hosts file
   ansible.builtin.template:
     src: hosts.j2

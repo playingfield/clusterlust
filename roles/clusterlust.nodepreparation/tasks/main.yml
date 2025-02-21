@@ -1,0 +1,37 @@
+---
+- name: Stop firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+
+- name: "Empower {{ cluster_admin }}"
+  ansible.builtin.template:
+    src: sudo.j2
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: '0444'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Disable requiretty
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    regexp: 'Defaults.*requiretty'
+    line: 'Defaults !requiretty'
+    state: present
+    owner: root
+    group: root
+    mode: '0440'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Proxy dnf
+  when: http_proxy is defined
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/dnf.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  loop:
+    - regexp: '^proxy='
+      line: "proxy={{ http_proxy | default('') }}"

@@ -1,7 +1,17 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Network config
+- name: Controller config
   hosts: controller
+  become: true
+  gather_facts: false
+  tags: [controller]
+  tasks:
+    - name: Configure controller
+      ansible.builtin.include_role:
+        name: clusterlust.controller
+
+- name: Network config
+  hosts: all
   become: true
   gather_facts: false
   tags: [hostsfile]
@@ -10,44 +20,12 @@
       ansible.builtin.include_role:
         name: clusterlust.hosts
 
-- name: Network config
+- name: Node preparation
   hosts: k8s_cluster
   become: true
   gather_facts: false
-  tags: [network]
+  tags: [nodepreparation]
   tasks:
-    - name: Disable firewalld
-      ansible.builtin.systemd:
-        name: firewalld
-        state: stopped
-        enabled: false
-
-    - name: Disable AD DNS
-      ansible.builtin.lineinfile:
-        path: /etc/resolv.conf
-        regexp: 'nameserver 10.0.0.205'
-        line: 'nameserver 10.0.0.205'
-        state: absent
-
-    - name: Set hostname
-      ansible.builtin.hostname:
-        name: "{{ inventory_hostname }}"
-        use: systemd
-
-- name: Proxy config
-  hosts: k8s_cluster
-  become: true
-  gather_facts: false
-  tags: [proxy]
-  tasks:
-    - name: Fix dnf
-      ansible.builtin.lineinfile:
-        path: /etc/dnf/dnf.conf
-        regexp: "{{ item.regexp }}"
-        line: "{{ item.line }}"
-        state: present
-      loop:
-        - regexp: '^proxy='
-          line: "proxy={{ http_proxy | default('') }}"
-        - regexp: '^repo_gpgcheck='
-          line: 'repo_gpgcheck=0'
+    - name: Configure cluster nodes
+      ansible.builtin.include_role:
+        name: clusterlust.nodepreparation
