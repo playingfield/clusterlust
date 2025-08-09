@@ -11,3 +11,29 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Disable nodelocaldns ip in resolver
+  when:
+    - enable_nodelocaldns is defined
+    - nodelocaldns_ip is defined
+    - not enable_nodelocaldns
+  block:
+    - name: Patch resolv.conf
+      ansible.builtin.lineinfile:
+        path: /etc/resolv.conf
+        regexp: "nameserver {{ nodelocaldns_ip }}"
+        state: absent
+        mode: '0644'
+
+    - name: Stat NetworkManager dns conf
+      ansible.builtin.stat:
+        path: /etc/NetworkManager/conf.d/dns.conf
+      register: _dns_conf_file
+
+    - name: Patch NetworkManager
+      when: _dns_conf_file.stat.exists | bool
+      ansible.builtin.lineinfile:
+        path: /etc/NetworkManager/conf.d/dns.conf
+        regexp: "servers = {{ nodelocaldns_ip }},{{ upstream_dns_servers|join(',') }}"
+        line: "servers = {{ upstream_dns_servers|join(',') }}"
+        mode: '0600'
