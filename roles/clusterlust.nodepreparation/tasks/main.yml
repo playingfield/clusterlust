@@ -25,6 +25,31 @@
     mode: '0440'
     validate: /usr/sbin/visudo -cf %s
 
+- name: Fix Timezone
+  when:
+    - localtime_stat.stat.islnk is defined and localtime_stat.stat.islnk
+    - localtime_stat.stat.lnk_target == '/usr/share/zoneinfo/UTC'
+  block:
+    - name: Gather selinux facts
+      ansible.builtin.setup:
+        gather_subset: selinux
+
+    - name: Put SELinux in permissive mode, logging actions that would be blocked.
+      when: ansible_facts.selinux.status == 'enabled'
+      ansible.posix.selinux:
+        policy: targeted
+        state: permissive
+
+    - name: Set ntp_timezone
+      community.general.timezone:
+        name: "{{ ntp_timezone | d('Europe/Amsterdam') }}"
+
+    - name: Re-enable SELinux
+      when: ansible_facts.selinux.status == 'enabled'
+      ansible.posix.selinux:
+        policy: targeted
+        state: enforcing
+
 - name: Proxy dnf
   when: http_proxy is defined
   ansible.builtin.lineinfile:
