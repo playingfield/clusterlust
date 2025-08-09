@@ -1,10 +1,10 @@
 ---
 - name: Check offline status
   ansible.builtin.debug:
-    msg: "registry_user: {{ registry_user }}"
+    msg: "registry_user: {{ registry_user | d('') }}"
     verbosity: 2
 
-- name: Registry login by semaphore user
+- name: Registry login
   become: true
   become_user: semaphore
   when: registry_pass is defined
@@ -12,12 +12,4 @@
     REGISTRY_PASS: "{{ registry_pass }}"
   ansible.builtin.command:
     cmd: 'docker login -u="{{ registry_user }}" -p=$REGISTRY_PASS "{{ registry_host }}"'
-    creates: "/home/semaphore/.docker/config.json"
-
-- name: Save registry login for semaphore use
-  become: true
-  become_user: semaphore
-  when: registry_pass is defined
-  ansible.builtin.command:
-    cmd: cp -R /home/semaphore/.docker /home/semaphore/tmp/
-    creates: /home/semaphore/tmp/.docker/config.json
+    creates: "{{ lookup('env', 'HOME')/.docker/config.json"
