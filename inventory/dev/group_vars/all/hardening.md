@@ -98,3 +98,6 @@ kube_cert_group: root
 # kube_system namespace is exempted by default
 kube_pod_security_use_default: true
 kube_pod_security_default_enforce: restricted
+
+# Set selinux state, permitted values are permissive, enforcing and disabled.
+preinstall_selinux_state: enforcing
