@@ -60,3 +60,41 @@
   loop:
     - regexp: '^proxy='
       line: "proxy={{ http_proxy | default('') }}"
+
+- name: Ensure iproute-tc is present
+  ansible.builtin.dnf:
+    name: iproute-tc
+    state: present
+
+- name: Ensure yum-utils is present
+  ansible.builtin.dnf:
+    name: yum-utils
+    state: present
+
+- name: Update packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_cache: true
+
+- name: Enable cGroups v2
+  ansible.builtin.lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX='
+    line: GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0,115200n8 no_timer_check biosdevname=0 net.ifnames=0 systemd.unified_cgroup_hierarchy=1"
+    mode: '0644'
+  register: grub
+
+- name: Reconfigure grub
+  when: grub.changed | bool
+  ansible.builtin.command:
+    cmd: grub2-mkconfig
+
+- name: Check if reboot required
+  ansible.builtin.command:
+    cmd: 'needs-restarting -r'
+  register: reboot_required
+
+- name: Reboot if required
+  when: ( reboot_required.rc == 1 ) or ( grub.changed | bool )
+  ansible.builtin.reboot:

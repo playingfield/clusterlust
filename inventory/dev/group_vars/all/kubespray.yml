@@ -6,13 +6,18 @@ container_manager: containerd  # default
 containerd_bin_dir: /usr/bin
 dns_domain: cluster.local
 dns_mode: coredns
-nodelocaldns_ip: 169.254.25.10
+enable_nodelocaldns: false
 remove_default_searchdomains: true
 enable_dual_stack_networks: false
 upstream_dns_servers:
   - 9.9.9.9
 loadbalancer_apiserver_localhost: false  # only for multi-master
 #loadbalancer_apiserver_type: nginx
+
+# Workaround for RHEL8: kernel version 4.18 is lower than Kubernetes system verification.
+kubeadm_ignore_preflight_errors:
+  - SystemVerification
+
 kube_config_dir: /etc/kubernetes
 kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"
 kube_manifest_dir: "{{ kube_config_dir }}/manifests"

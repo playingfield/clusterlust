@@ -1,8 +1,6 @@
 ---
 download_localhost: false # on ansible controller
 download_run_once: false # rsync did not work for me
-download_force_cache: true
-download_keep_remote_cache: true
 
 # http_proxy: "http://10.0.0.206:3128"
 # https_proxy: "http://10.0.0.206:3128"
