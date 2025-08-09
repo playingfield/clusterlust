@@ -3,3 +3,4 @@
 .vscode
 roles/bbaassssiiee.*
 files/kubeblocks_crds.yaml
+files/*.yml
