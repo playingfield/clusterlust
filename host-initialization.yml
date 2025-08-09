@@ -1,8 +1,8 @@
 #!/usr/bin/env ansible-playbook
 ---
 - name: Controller config
-  hosts: controller
-  become: true
+  hosts: localhost
+  become: false
   gather_facts: false
   tags: [controller]
   tasks:

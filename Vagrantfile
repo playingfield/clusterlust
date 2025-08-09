@@ -7,7 +7,7 @@ Vagrant.require_version ">= 2.0.0"
 
 # Select the config file from the STAGE environment variable (dev or test)
 # VM Configs are loaded from json files.
-$Stage = ENV['STAGE'] || "mini"
+$Stage = ENV['STAGE'] || "dev"
 # Require JSON module
 require 'json'
 # Read JSON file with config details
