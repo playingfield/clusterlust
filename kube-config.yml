@@ -1,17 +1,14 @@
 #!/usr/bin/env ansible-playbook
 ---
 
-- name: Configure controller
-  hosts: controller
+- name: Configure Semaphore
+  hosts: semaphore
   tags: [config]
   gather_facts: true
-  vars:
-    local_user: semaphore
 
   tasks:
 
     - name: Stat kubectl
-      delegate_to: controller
       run_once: true
       ansible.builtin.stat:
         path: /usr/bin/kubectl
@@ -19,7 +16,7 @@
 
     - name: Remove kubectl if link
       become: true
-      delegate_to: controller
+      delegate_to: localhost
       run_once: true
       when: kubectl_stat.stat.islnk is defined and kubectl_stat.stat.islnk | bool
       ansible.builtin.file:
@@ -27,7 +24,6 @@
         state: absent
 
     - name: Stat helm
-      delegate_to: controller
       run_once: true
       ansible.builtin.stat:
         path: /usr/bin/helm
@@ -35,20 +31,11 @@
 
     - name: Remove helm if link
       become: true
-      delegate_to: controller
       run_once: true
       when: helm_stat.stat.islnk is defined and helm_stat.stat.islnk | bool
       ansible.builtin.file:
         path: /usr/bin/helm
         state: absent
-
-    - name: Create local_user config dir
-      become: true
-      ansible.builtin.file:
-        path: "/home/{{ local_user }}/.kube"
-        owner: "{{ local_user }}"
-        state: directory
-        mode: '0700'
 
     - name: Create cluster_admin config dir
       become: true
@@ -59,13 +46,28 @@
         state: directory
         mode: '0700'
 
+- name: Configure .kube directory
+  hosts: localhost
+  connection: local
+  tags: [config]
+  gather_facts: true
+  become: false
+
+  tasks:
+    - name: Create kube config dir
+      ansible.builtin.file:
+        path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube"
+        state: directory
+        mode: '0700'
+
+
 - name: Configure controller
   hosts: kube_control_plane
   tags: [sync]
   gather_facts: true
   become: true
   vars:
-    local_user: semaphore
+    _kube_config: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config.{{ cluster_name | d('k8s') }}"
 
   tasks:
 
@@ -73,61 +75,86 @@
       run_once: true
       ansible.builtin.fetch:
         src: /etc/kubernetes/admin.conf
-        dest: "/home/{{ local_user }}/.kube/config"
+        dest: "{{ _kube_config }}"
         mode: '0600'
         flat: true
 
-- name: Configure controller
-  hosts: controller
+- name: Configure .kube/config
+  hosts: localhost
+  connection: local
   tags: [edit]
   gather_facts: true
-
+  become: false
   vars:
-    local_user: semaphore
+    _kube_config: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config.{{ cluster_name | d('k8s') }}"
 
   tasks:
     - name: Configure k8s master
-      become: true
       ansible.builtin.lineinfile:
-        path: "/home/{{ local_user }}/.kube/config"
+        path: "{{ _kube_config }}"
         regexp: '    server.*6443$'
-        line: "    server: https://{{ groups['kube_control_plane'][0] }}:6443"
+        line: "    server: https://{{ hostvars[groups['kube_control_plane'][0]].ansible_host }}:6443"
         state: present
-        owner: "{{ local_user }}"
         mode: '0600'
 
-    - name: Copy kube config to cluster_admin
-      when: cluster_admin is defined
-      become: true
-      ansible.builtin.copy:
-        remote_src: true
-        src: "/home/{{ local_user }}/.kube/config"
-        dest: "/home/{{ cluster_admin }}/.kube/"
-        owner: "{{ cluster_admin }}"
-        mode: '0600'
+    - name: Delete stale kube config
+      ansible.builtin.file:
+        path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
+        state: absent
 
-    - name: Configure cluster_admin bash shell
+    - name: "ln -s .kube/config.{{ cluster_name | d('k8s') }} .kube/config"
+      ansible.builtin.file:
+        src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config.{{ cluster_name | d('k8s') }}"
+        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
+        state: link
+
+- name: Configure cluster_admin
+  hosts: semaphore
+  tags: [edit]
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Configure cluster_admin
       when: cluster_admin is defined
-      become: true
-      ansible.builtin.blockinfile:
-        path: "/home/{{ cluster_admin }}/.bash_profile"
-        owner: "{{ cluster_admin }}"
-        mode: '0600'
-        block: |
-          source <(kubectl completion bash)
-          alias k=kubectl
-          alias kge="kubectl get events --all-namespaces --sort-by='.lastTimestamp'"
-          complete -F __start_kubectl k
+      block:
+        - name: Copy kube config to cluster_admin
+          ansible.builtin.copy:
+            remote_src: true
+            src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config.{{ cluster_name | d('k8s') }}"
+            dest: "/home/{{ cluster_admin }}/.kube/config.{{ cluster_name | d('k8s') }}"
+            owner: "{{ cluster_admin }}"
+            mode: '0600'
+
+        - name: Delete stale kube config
+          ansible.builtin.file:
+            path: "/home/{{ cluster_admin }}/.kube/config"
+            state: absent
+
+        - name: "ln -s .kube/config.{{ cluster_name | d('k8s') }} .kube/config"
+          ansible.builtin.file:
+            src: "/home/{{ cluster_admin }}/.kube/config.{{ cluster_name | d('k8s') }}"
+            dest: "/home/{{ cluster_admin }}/.kube/config"
+            state: link
+
+        - name: Configure cluster_admin bash shell
+          ansible.builtin.blockinfile:
+            path: "/home/{{ cluster_admin }}/.bash_profile"
+            owner: "{{ cluster_admin }}"
+            mode: '0600'
+            block: |
+              source <(kubectl completion bash)
+              alias k=kubectl
+              alias kge="kubectl get events --all-namespaces --sort-by='.lastTimestamp'"
+              complete -F __start_kubectl k
 
     - name: Get helm completion
       ansible.builtin.command: "/usr/local/bin/helm completion bash"
       changed_when: false
       register: helm_completion
       check_mode: false
-      no_log: "{{ not debug }}"
 
     - name: Install helm completion
-      become: true
       ansible.builtin.copy:
         dest: /etc/bash_completion.d/helm.sh
         content: "{{ helm_completion.stdout }}"
