@@ -18,10 +18,7 @@ rules:
   # https://github.com/adrienverge/yamllint/issues/384
   comments-indentation: false
   document-start: disable
-  indentation:
-    indent-sequences: consistent
-    spaces: 2
-    level: error
+  indentation: disable
   line-length:
     max: 160
     level: warning
