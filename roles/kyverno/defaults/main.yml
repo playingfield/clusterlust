@@ -1,0 +1,36 @@
+---
+# defaults file for kyverno
+desired_state: present
+kyverno_namespace: kyverno
+# Whether to deploy Kyverno itself (true/false)
+kyverno_install: false
+
+# Path (relative) to where templates are rendered to be applied
+# note: this renders into {{ playbook_dir }}/files/
+policy_render_dest_dir: "{{ playbook_dir }}/files/kyverno_policies"
+
+# Lists of policy filenames (without .yaml) that are in templates/ (Jinja2 templates)
+# Policies in present_policies will be templated -> files -> applied (applied/created/updated)
+present_policies:
+  - add-networkpolicy-dns
+  - add-psa-labels
+  - deny-privileged-profile
+  - require-netpol
+
+# Policies in absent_policies will be removed
+absent_policies:
+  - add-network-policy
+
+# k8s api version / kind used for Kyverno cluster/policy objects (usually Policy or ClusterPolicy)
+# If using namespaced Policies, set kind: Policy and provide namespace; for cluster-wide: ClusterPolicy
+policy_kind: Policy
+policy_api_version: kyverno.io/v1
+
+# kubeconfig (optional) : leave empty to use default env or KUBECONFIG
+kubeconfig: ""
+
+# Optional labels when templating/applying
+policy_labels: {}
+
+# Validation when applying (kubernetes.core.k8s supports validate: true)
+policy_validate: true

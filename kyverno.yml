@@ -1,0 +1,11 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Manage Policies
+  hosts: localhost
+  become: false
+  gather_facts: true
+
+  tasks:
+    - name: Kyverno
+      ansible.builtin.include_role:
+        name: kyverno

@@ -1,0 +1,11 @@
+---
+# tasks file for kyverno
+
+- name: Install Kyberno
+  ansible.builtin.include_tasks: install.yml
+
+- name: Include absent tasks
+  ansible.builtin.include_tasks: absent.yml
+
+- name: Include present tasks
+  ansible.builtin.include_tasks: present.yml

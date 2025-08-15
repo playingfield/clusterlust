@@ -1,0 +1,36 @@
+---
+# tasks/absent.yml
+
+
+- name: Render absent policy templates into playbook files (so we can extract metadata)
+  ansible.builtin.copy:
+    src: "{{ item }}.yaml"
+    dest: "{{ policy_render_dest_dir }}/{{ item }}.yaml"
+    mode: '0644'
+  loop: "{{ absent_policies | default([]) }}"
+  loop_control:
+    label: "{{ item }}"
+  vars:
+    kyverno_namespace: "{{ kyverno_namespace }}"
+
+- name: Load absent policy definition for deletion
+  ansible.builtin.set_fact:
+    _absent_items: "{{ (_absent_items | default([])) + [ lookup('ansible.builtin.file', policy_render_dest_dir ~ '/' ~ item ~ '.yaml') | from_yaml ] }}"
+  loop: "{{ absent_policies | default([]) }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Delete absent policies using kubernetes.core.k8s
+  vars:
+    _obj: "{{ _absent_items[item] }}"
+  kubernetes.core.k8s:
+    state: absent
+    kind: "{{ _obj.kind | default(policy_kind) }}"
+    api_version: "{{ _obj.apiVersion | default(policy_api_version) }}"
+    name: "{{ _obj.metadata.name }}"
+    namespace: "{{ _obj.metadata.namespace | default(kyverno_namespace) }}"
+    kubeconfig: "{{ kubeconfig | default(omit) }}"
+  loop: "{{ range(0, _absent_items | length) }}"
+  loop_control:
+    label: "{{ _absent_items[item].metadata.name }}"
+  ignore_errors: true

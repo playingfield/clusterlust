@@ -1,0 +1,25 @@
+---
+# tasks/present.yml
+
+- name: Render present policy templates into playbook files dir
+  ansible.builtin.copy:
+    src: "{{ item }}.yaml"
+    dest: "{{ policy_render_dest_dir }}/{{ item }}.yaml"
+    mode: '0644'
+  loop: "{{ present_policies | default([]) }}"
+  loop_control:
+    label: "{{ item }}"
+  vars:
+    # you can supply any variables for templating here or rely on role vars
+    kyverno_namespace: "{{ kyverno_namespace }}"
+
+- name: Apply rendered present policies (create/update) with validation
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('ansible.builtin.file', policy_render_dest_dir ~ '/' ~ item ~ '.yaml') | from_yaml }}"
+    kubeconfig: "{{ kubeconfig | default(omit) }}"
+    validate:
+      fail_on_error: true
+  loop: "{{ present_policies | default([]) }}"
+  loop_control:
+    label: "{{ item }}"
