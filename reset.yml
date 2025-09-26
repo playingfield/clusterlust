@@ -16,24 +16,33 @@
       ansible.builtin.include_role:
         name: kubespray-defaults
 
+    - name: Kubeadm reset with force
+      ansible.builtin.command:
+        cmd: kubeadm reset -f
+      changed_when: true
+      register: _reset
+      failed_when: _reset.rc not in [0, 2]
+
     - name: Run Kubespray reset role
       ansible.builtin.include_role:
         name: reset
       vars:
         bin_dir: /usr/bin
-        containerd_storage_dir: /var/lib/containerd
+        containerd_storage_dir: "/var/lib/containerd"
+        containerd_state_dir: "/run/containerd"
+        containerd_systemd_dir: "/etc/systemd/system/containerd.service.d"
+        containerd_cfg_dir: "/etc/containerd"
+        sysctl_file_path: "/etc/sysctl.d/99-sysctl.conf"
         deploy_container_engine: true
         etcd_config_dir: /etc/ssl/etcd
         etcd_data_dir: /var/lib/etcd
         etcd_events_data_dir: /var/lib/etcd-events
+        enable_dual_stack_networks: false
+        ipv4_stack: true
+        ipv6_stack: false
         kube_config_dir: /etc/kubernetes
         krew_root_dir: /usr/local/krew
         nginx_config_dir: /etc/nginx
-
-    - name: Kubeadm reset with force
-      ansible.builtin.command:
-        cmd: kubeadm reset -f
-      changed_when: true
 
     - name: Remove /etc/cni/net.d
       ansible.builtin.file:
@@ -51,10 +60,10 @@
         path: /root/.kube
         state: absent
 
-    - name: Clear kube config dir
-      become: false
+    - name: Clear /etc/kubernetes
+      become: true
       ansible.builtin.file:
-        path: .kube
+        path: /etc/kubernetes
         state: absent
 
     - name: Reboot
