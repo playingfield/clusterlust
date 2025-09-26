@@ -4,9 +4,9 @@
 k8s-master01 ansible_host=192.168.178.231 ip=192.168.178.231 etcd_member_name=etcd1
 k8s-master02 ansible_host=192.168.178.232 ip=192.168.178.232 etcd_member_name=etcd2
 k8s-master03 ansible_host=192.168.178.233 ip=192.168.178.233 etcd_member_name=etcd3
-k8s-node01 ansible_host=192.168.178.209 ip=192.168.178.212
-k8s-node02 ansible_host=192.168.178.210 ip=192.168.178.213
-k8s-node03 ansible_host=192.168.178.212 ip=192.168.178.214
+k8s-node01 ansible_host=192.168.178.212 ip=192.168.178.212
+k8s-node02 ansible_host=192.168.178.213 ip=192.168.178.213
+k8s-node03 ansible_host=192.168.178.214 ip=192.168.178.214
 
 #  list of servers where kubernetes control plane components (apiserver, scheduler, controller) will run.
 [kube_control_plane]
