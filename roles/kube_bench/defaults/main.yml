@@ -1,0 +1,5 @@
+---
+desired_state: present
+registry_host: docker.io
+kube_bench_version: v0.12.0
+kube_bench_namespace: kube-system

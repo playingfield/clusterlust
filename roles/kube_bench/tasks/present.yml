@@ -1,0 +1,19 @@
+---
+
+- name: Prepare job manifest
+  ansible.builtin.template:
+    src: job.yaml.j2
+    dest: "{{ playbook_dir }}/files/job.yaml"
+    mode: '0600'
+
+- name: Install job manifest
+  kubernetes.core.k8s:
+    state: present
+    namespace: "{{ kube_bench_namespace }}"
+    definition: "{{ lookup('file', playbook_dir + '/files/{{ item }}') | from_yaml }}"
+    validate:
+      fail_on_error: true
+    wait: true
+    wait_timeout: 600
+  loop:
+    - job.yaml
