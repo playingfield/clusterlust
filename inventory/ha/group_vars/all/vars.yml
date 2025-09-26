@@ -8,13 +8,11 @@ dns_mode: coredns
 download_run_once: false
 download_localhost: false
 enable_dual_stack_networks: false
-docker_version: "docker-ce-26.1.0"
-etcd_deployment_type: kubeadm
-helm_enabled: true
-krew_enabled: false
+upstream_dns_servers:
+  - 192.168.178.1
+etcd_deployment_type: host
 kube_pods_subnet: "192.168.0.0/16"
-kube_network_plugin: calico
-kube_proxy_mode: iptables
+kube_network_plugin: cilium
 kubectl_localhost: true
 kubeconfig_localhost: true
 kube_apiserver_node_port_range: "1024-32767"
