@@ -5,4 +5,4 @@ collections:
   - name: community.docker
   - name: https://github.com/kubernetes-sigs/kubespray.git
     type: git
-    version: v2.28.0  # The last version for RHEL 8
+    version: v2.27.1  # Works with AlmaLinux 8
