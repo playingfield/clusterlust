@@ -151,6 +151,7 @@ cilium_encryption_type: "wireguard"
 
 # Hubble - Network Observability for Kubernetes
 ### Enable Hubble for network visibility
+<<<<<<< HEAD
 cilium_enable_hubble: false
 
 ### Enable Hubble-ui for web-based network flow visualization
@@ -158,6 +159,15 @@ cilium_enable_hubble_ui: false
 
 ### Enable Hubble Metrics for Prometheus integration
 cilium_enable_hubble_metrics: false
+=======
+cilium_enable_hubble: true
+
+### Enable Hubble-ui for web-based network flow visualization
+cilium_enable_hubble_ui: true
+
+### Enable Hubble Metrics for Prometheus integration
+cilium_enable_hubble_metrics: true
+>>>>>>> 66901ae (cilium)
 
 ### Enable comprehensive metrics collection for maximum visibility
 cilium_hubble_metrics:
@@ -391,3 +401,7 @@ cilium_cgroup_host_root: "/sys/fs/cgroup"
 #       resourceNames:
 #       - toto
 # cilium_clusterrole_rules_operator_extra_vars: []
+<<<<<<< HEAD
+=======
+
+>>>>>>> 66901ae (cilium)

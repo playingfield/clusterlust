@@ -1,0 +1,23 @@
+---
+artifacts_dir: "{{ playbook_dir }}/files"
+bin_dir: /usr/bin
+cluster_name: k8s
+container_manager: containerd  # default
+containerd_bin_dir: /usr/bin
+dns_mode: coredns
+download_run_once: false
+download_localhost: false
+enable_dual_stack_networks: false
+docker_version: "docker-ce-26.1.0"
+etcd_deployment_type: kubeadm
+helm_enabled: true
+krew_enabled: false
+kube_pods_subnet: "192.168.0.0/16"
+kube_network_plugin: calico
+kube_proxy_mode: iptables
+kubectl_localhost: true
+kubeconfig_localhost: true
+kube_apiserver_node_port_range: "1024-32767"
+ntp_enabled: true
+ntp_manage_config: false
+
