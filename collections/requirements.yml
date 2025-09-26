@@ -8,6 +8,7 @@ collections:
     version: 5.2.0
   - name: community.docker
     version: 4.3.1
-  - name: https://github.com/kubernetes-sigs/kubespray.git
+# - name: git@github.com:kubernetes-sigs/kubespray.git
+  - name: git@github.com:playingfield/kubespray.git
     type: git
-    version: v2.27.1  # Works with AlmaLinux 8
+    version: develop  # Fast integration 
