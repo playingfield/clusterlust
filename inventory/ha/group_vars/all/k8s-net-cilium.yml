@@ -104,11 +104,11 @@ cilium_enable_prometheus: false
 # cilium_native_routing_cidr_ipv6: ""
 
 # Enable transparent network encryption.
-# cilium_encryption_enabled: false
+cilium_encryption_enabled: true
 
 # Encryption method. Can be either ipsec or wireguard.
 # Only effective when `cilium_encryption_enabled` is set to true.
-# cilium_encryption_type: "ipsec"
+cilium_encryption_type: "wireguard"
 
 # Enable encryption for pure node to node traffic.
 # This option is only effective when `cilium_encryption_type` is set to `ipsec`.
@@ -150,13 +150,13 @@ cilium_enable_prometheus: false
 
 # Hubble - Network Observability for Kubernetes
 ### Enable Hubble for network visibility
-cilium_enable_hubble: true
+cilium_enable_hubble: false
 
 ### Enable Hubble-ui for web-based network flow visualization
-cilium_enable_hubble_ui: true
+cilium_enable_hubble_ui: false
 
 ### Enable Hubble Metrics for Prometheus integration
-cilium_enable_hubble_metrics: true
+cilium_enable_hubble_metrics: false
 
 ### Enable comprehensive metrics collection for maximum visibility
 cilium_hubble_metrics:
