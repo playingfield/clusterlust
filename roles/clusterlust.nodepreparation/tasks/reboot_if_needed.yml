@@ -1,0 +1,11 @@
+---
+- name: Check if reboot required
+  ansible.builtin.command:
+    cmd: 'needs-restarting -r'
+  register: reboot_required
+  failed_when: reboot_required.rc not in [0, 1]
+  changed_when: reboot_required.rc == 1
+
+- name: Reboot if required
+  when: ( reboot_required.rc == 1 )
+  ansible.builtin.reboot:

@@ -25,6 +25,19 @@
     mode: '0440'
     validate: /usr/sbin/visudo -cf %s
 
+- name: Setup SELinux permissions
+  ansible.posix.seboolean:
+    name: "{{ item }}"
+    state: true
+    persistent: true
+  loop:
+    - rsync_full_access
+
+- name: Get stat information about /etc/localtime
+  ansible.builtin.stat:
+    path: /etc/localtime
+  register: localtime_stat
+
 - name: Fix Timezone
   when:
     - localtime_stat.stat.islnk is defined and localtime_stat.stat.islnk
@@ -50,51 +63,76 @@
         policy: targeted
         state: enforcing
 
-- name: Proxy dnf
-  when: http_proxy is defined
+- name: Environment var HTTPS_PROXY
+  when: https_proxy is defined
   ansible.builtin.lineinfile:
-    path: /etc/dnf/dnf.conf
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    state: present
-  loop:
-    - regexp: '^proxy='
-      line: "proxy={{ http_proxy | default('') }}"
-
-- name: Ensure iproute-tc is present
-  ansible.builtin.dnf:
-    name: iproute-tc
-    state: present
-
-- name: Ensure yum-utils is present
-  ansible.builtin.dnf:
-    name: yum-utils
-    state: present
-
-- name: Update packages
-  ansible.builtin.dnf:
-    name: "*"
-    state: latest
-    update_cache: true
-
-- name: Enable cGroups v2
-  ansible.builtin.lineinfile:
-    path: /etc/default/grub
-    regexp: '^GRUB_CMDLINE_LINUX='
-    line: GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0,115200n8 no_timer_check biosdevname=0 net.ifnames=0 systemd.unified_cgroup_hierarchy=1"
+    path: /etc/environment
+    create: true
     mode: '0644'
-  register: grub
+    regexp: '^HTTPS_PROXY='
+    line: 'HTTPS_PROXY={{ https_proxy }}'
+    state: present
 
-- name: Reconfigure grub
-  when: grub.changed | bool
-  ansible.builtin.command:
-    cmd: grub2-mkconfig
+- name: Update linux
+  when:
+    - update_linux | bool
+    - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version|int == 8
+  block:
 
-- name: Check if reboot required
-  ansible.builtin.command:
-    cmd: 'needs-restarting -r'
-  register: reboot_required
+    - name: Fix dnf proxy
+      when: http_proxy is defined
+      ansible.builtin.lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: '^proxy='
+        line: "proxy={{ http_proxy }}"
+        state: present
 
-- name: Reboot if required
-  when: ( reboot_required.rc == 1 ) or ( grub.changed | bool )
-  ansible.builtin.reboot:
+    - name: Fix dnf
+      ansible.builtin.lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: '^repo_gpgcheck='
+        line: 'repo_gpgcheck=0'
+        state: present
+
+    - name: Check Azure repo file
+      ansible.builtin.stat:
+        path: /etc/yum.repos.d/prod.repo
+      register: azure_repo
+
+    - name: Disable Azure repo
+      when: azure_repo.stat.exists | bool
+      ansible.builtin.yum_repository:
+        baseurl: 'https://packages.microsoft.com/alma/8/prod/'
+        file: prod
+        name: packages-microsoft-com-prod
+        description: Microsoft Production
+        enabled: false
+
+    - name: Ensure yum-utils is present
+      ansible.builtin.dnf:
+        name: yum-utils
+        state: present
+
+    - name: Enable kernel update
+      ansible.builtin.lineinfile:
+        path: /etc/yum.repos.d/almalinux.repo
+        regexp: '^exclude'
+        line: '#exclude=kernel* kmod-kvdo'
+        mode: '0600'
+
+    - name: Update packages and kernel
+      ansible.builtin.dnf:  # noqa: package-latest
+        name: "*"
+        state: latest
+        update_cache: true
+
+    - name: Reboot if needed
+      ansible.builtin.include_tasks: reboot_if_needed.yml
+
+    - name: Disable kernel update
+      ansible.builtin.lineinfile:
+        path: /etc/yum.repos.d/almalinux.repo
+        regexp: '^#exclude'
+        line: 'exclude=kernel* kmod-kvdo'
+        mode: '0600'
