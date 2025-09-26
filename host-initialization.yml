@@ -23,8 +23,10 @@
 - name: Node preparation
   hosts: k8s_cluster
   become: true
-  gather_facts: false
+  gather_facts: true
   tags: [nodepreparation]
+  vars:
+    update_linux: true
   tasks:
     - name: Configure cluster nodes
       ansible.builtin.include_role:
