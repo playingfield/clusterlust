@@ -1,0 +1,23 @@
+---
+container_manager: containerd  # default
+gvisor_enabled: true
+kata_containers_enabled: false  # requires nested virtualization
+container_manager_on_localhost: docker  # controller
+dns_domain: cluster.local
+dns_mode: coredns
+enable_nodelocaldns: false
+enable_dual_stack_networks: false
+image_command_tool_on_localhost: docker
+leave_etc_backup_files: false
+# cache on k8s_cluster nodes
+local_release_dir: /tmp/releases
+# permissions for Cilium
+kube_owner: root
+kube_pods_subnet: "192.168.0.0/16"
+kube_network_plugin: cilium
+kube_proxy_mode: iptables
+kubectl_localhost: true
+kubeconfig_localhost: true
+kube_apiserver_node_port_range: "1024-32767"  # X4
+# Set selinux state, permitted values are permissive, enforcing and disabled.
+preinstall_selinux_state: enforcing

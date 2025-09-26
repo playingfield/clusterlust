@@ -1,0 +1,28 @@
+kube_proxy_strict_arp: true
+metallb_enabled: false
+metallb_namespace: infrastructure
+metallb_speaker_enabled: true
+metallb_config:
+  controller:
+    nodeselector:
+      kubernetes.io/os: linux
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+  speaker:
+    nodeselector:
+      kubernetes.io/os: linux
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+  address_pools:
+    primary:
+      ip_range:
+        - 192.168.178.240-192.168.178.249
+      avoid_buggy_ips: true
+  layer2:
+    - primary
