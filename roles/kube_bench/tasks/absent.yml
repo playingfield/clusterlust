@@ -1,0 +1,13 @@
+---
+# Tasks to converge to state absent for ingress
+- name: Destroy job
+  kubernetes.core.k8s:
+    state: absent
+    namespace: "{{ kube_bench_namespace }}"
+    definition:
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: kube-bench
+    wait: true
+    wait_timeout: 600

@@ -1,2 +1,0 @@
----
-package_clause: "'kbcli' in ansible_facts.packages"

@@ -1,0 +1,25 @@
+---
+# https://kubespray.io/#/docs/operations/hardening
+
+# Remove anonymous access to cluster
+# https://github.com/kubernetes-sigs/kubespray/issues/11835
+remove_anonymous_access: false
+
+# enable encryption at rest with Kubespray
+kube_encrypt_secret_data: true
+kube_encryption_resources: [secrets]
+kube_encryption_algorithm: "secretbox"
+
+# enable kubernetes audit
+kubernetes_audit: true
+audit_log_path: "/var/log/kube-apiserver-log.json"
+audit_log_maxage: 30
+audit_log_maxbackups: 10
+audit_log_maxsize: 100
+
+
+## kube-scheduler
+kube_scheduler_bind_address: 127.0.0.1
+
+## kube-controller-manager
+kube_controller_manager_bind_address: 127.0.0.1
