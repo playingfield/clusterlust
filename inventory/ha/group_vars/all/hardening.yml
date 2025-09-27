@@ -3,7 +3,7 @@
 
 # Remove anonymous access to cluster
 # https://github.com/kubernetes-sigs/kubespray/issues/11835
-remove_anonymous_access: true
+remove_anonymous_access: false
 
 # enable encryption at rest with Kubespray
 kube_encrypt_secret_data: true
