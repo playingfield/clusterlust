@@ -170,7 +170,7 @@ cilium_hubble_metrics:
   - httpV2       # Enhanced HTTP metrics with more details
 
 ### Enable Hubble installation (required for UI and advanced features)
-cilium_hubble_install: true
+cilium_hubble_install: false
 
 ### Enable auto-generation of TLS certificates for secure Hubble communication
 cilium_hubble_tls_generate: true
