@@ -11,4 +11,4 @@ collections:
 # - name: https://github.com/kubernetes-sigs/kubespray.git
   - name: https://github.com/playingfield/kubespray.git
     type: git
-    version: develop  # Fast integration 
+    version: develop

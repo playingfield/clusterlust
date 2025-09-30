@@ -391,4 +391,3 @@ cilium_cgroup_host_root: "/sys/fs/cgroup"
 #       resourceNames:
 #       - toto
 # cilium_clusterrole_rules_operator_extra_vars: []
-
