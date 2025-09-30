@@ -102,7 +102,7 @@
         path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
         state: absent
 
-    - name: "ln -s .kube/config.{{ cluster_name | d('k8s') }} .kube/config"
+    - name: Link .kube/config
       ansible.builtin.file:
         src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config.{{ cluster_name | d('k8s') }}"
         dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
@@ -118,6 +118,14 @@
     - name: Configure cluster_admin
       when: cluster_admin is defined
       block:
+        - name: Ensure directory exists
+          ansible.builtin.file:
+            path: "/home/{{ cluster_admin }}/.kube"
+            state: directory
+            owner: "{{ cluster_admin }}"
+            group: "{{ cluster_admin }}"
+            mode: '0700'
+
         - name: Copy kube config to cluster_admin
           ansible.builtin.copy:
             remote_src: true
@@ -131,7 +139,7 @@
             path: "/home/{{ cluster_admin }}/.kube/config"
             state: absent
 
-        - name: "ln -s .kube/config.{{ cluster_name | d('k8s') }} .kube/config"
+        - name: Link .kube/config for cluster_admin
           ansible.builtin.file:
             src: "/home/{{ cluster_admin }}/.kube/config.{{ cluster_name | d('k8s') }}"
             dest: "/home/{{ cluster_admin }}/.kube/config"
@@ -155,6 +163,7 @@
       check_mode: false
 
     - name: Install helm completion
+      when: "'skipped' not in helm_completion.stdout"
       ansible.builtin.copy:
         dest: /etc/bash_completion.d/helm.sh
         content: "{{ helm_completion.stdout }}"
