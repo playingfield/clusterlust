@@ -18,4 +18,3 @@ kubeconfig_localhost: true
 kube_apiserver_node_port_range: "1024-32767"
 ntp_enabled: true
 ntp_manage_config: false
-
