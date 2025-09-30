@@ -2,7 +2,7 @@
 ---
 
 - name: Configure Semaphore
-  hosts: semaphore
+  hosts: controller
   tags: [config]
   gather_facts: true
 
@@ -109,7 +109,7 @@
         state: link
 
 - name: Configure cluster_admin
-  hosts: semaphore
+  hosts: controller
   tags: [edit]
   gather_facts: true
   become: true
