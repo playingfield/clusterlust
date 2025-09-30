@@ -1,5 +1,0 @@
----
-
-- name: Install kbcli
-  when: use_kbcli | bool
-  ansible.builtin.include_tasks: "kbcli.yml"

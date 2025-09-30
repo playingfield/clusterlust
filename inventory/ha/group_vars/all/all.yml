@@ -1,0 +1,17 @@
+---
+# https://kubespray.io/#/docs/ansible/vars
+artifacts_dir: "{{ playbook_dir }}/files"
+bin_dir: /usr/bin
+cloud: true
+cluster_name: k8s
+download_cache_dir: /tmp/kubespray_cache
+download_localhost: true
+download_run_once: true
+download_force_cache: true
+download_keep_remote_cache: true
+loadbalancer_apiserver_localhost: true  # multi-master
+loadbalancer_apiserver_type: nginx
+ntp_enabled: true
+ntp_manage_config: false
+upstream_dns_servers:
+  - 192.168.178.1

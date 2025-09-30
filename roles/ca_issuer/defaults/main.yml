@@ -1,0 +1,16 @@
+---
+ca_issuer_common_name: "Root CA"
+ca_issuer_subject:
+  countries:
+    - NL
+  provinces:
+    - Tubantia
+  localities:
+    - Zwaagland
+  organizations:
+    - Example
+  organizationalUnits:
+    - Kantine
+desired_state: present
+# This var is not needed unless using 2 clusters in one project.
+# k8s_auth_kubeconfig: "{{ lookup('env', 'HOME') }}/.kube/config"

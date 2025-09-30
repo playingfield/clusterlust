@@ -1,0 +1,149 @@
+---
+# Tasks to reach desired state present with role ca_issuer
+- name: Check if ca-issuer ClusterIssuer exists
+  kubernetes.core.k8s_info:
+    api_version: cert-manager.io/v1
+    kind: ClusterIssuer
+    name: ca-issuer
+  register: ca_issuer_info
+
+- name: Deploy bootstrap CA Issuer if not present
+  when:
+    - ca_issuer_info.resources | length == 0
+    - intermediate_ca_cert is not defined
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: bootstrap-ca
+      spec:
+        selfSigned: {}
+
+- name: Deploy CA certificate if not present
+  when:
+    - intermediate_ca_cert is not defined
+    - ca_issuer_info.resources | length == 0
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cert-manager.io/v1
+      kind: Certificate
+      metadata:
+        name: ca-cert  # Fixed name to match YAML
+        namespace: cert-manager
+      spec:
+        isCA: true
+        duration: 87600h  # 10 years
+        renewBefore: 720h  # Renew 30 days before expiry
+        secretName: ca-key-pair  # Stores the CA certificate & key
+        privateKey:
+          algorithm: RSA
+          size: 4096  # Ensures a 4096-bit key
+        subject:
+          "{{ ca_issuer_subject }}"
+        commonName: "{{ ca_issuer_common_name }}"
+        usages:
+          - cert sign
+          - crl sign
+        issuerRef:
+          name: bootstrap-ca
+          kind: ClusterIssuer
+
+- name: Create secret with intermediate CA certificate and key
+  when:
+    - intermediate_ca_cert is defined
+    - intermediate_ca_key is defined
+    - ca_issuer_info.resources | length == 0
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: ca-key-pair
+        namespace: cert-manager
+      type: kubernetes.io/tls
+      data:
+        ca.crt: "{{ root_ca_cert | b64encode }}"
+        tls.crt: "{{ intermediate_ca_cert | b64encode }}"
+        tls.key: "{{ intermediate_ca_key | b64encode }}"
+  no_log: false
+
+- name: Wait for CA secret to be ready
+  when: ca_issuer_info.resources | length == 0
+  until: ca_secret_info.resources | length > 0
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: ca-key-pair
+    namespace: cert-manager
+  register: ca_secret_info  # New registration for the actual certificate
+  retries: 10
+  delay: 10
+
+- name: Wait for Certificate to be ready
+  kubernetes.core.k8s_info:
+    api_version: cert-manager.io/v1
+    kind: Certificate
+    name: ca-cert
+    namespace: cert-manager
+  register: ca_cert_info
+  retries: 30
+  delay: 10
+  until:
+    - ca_cert_info.resources | length > 0
+    - ca_cert_info.resources[0].status is defined
+    - ca_cert_info.resources[0].status.conditions is defined
+    - ca_cert_info.resources[0].status.conditions | selectattr('type', 'equalto', 'Ready') | map(attribute='status') | first == 'True'
+  when:
+    - intermediate_ca_cert is not defined
+    - ca_issuer_info.resources | length == 0
+
+- name: Deploy ca-issuer Issuer if not present
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: ca-issuer
+      spec:
+        ca:
+          secretName: ca-key-pair
+  when:
+    - ca_issuer_info.resources | length == 0
+    - ca_secret_info.resources | length > 0
+
+- name: Deploy ConfigMap in cert-manager namespace
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: ca-config
+        namespace: cert-manager
+      data:
+        ca.cnf: |
+          [ req ]
+          default_bits       = 4096
+          default_md         = sha256
+          prompt            = no
+          distinguished_name = req_distinguished_name
+          x509_extensions    = v3_ca
+
+          [ req_distinguished_name ]
+          C  = {{ ca_issuer_subject.countries[0] }}
+          ST = {{ ca_issuer_subject.provinces[0] }}
+          O  = {{ ca_issuer_subject.organizations[0] }}
+          OU = {{ ca_issuer_subject.organizationalUnits[0] }}
+          CN = {{ ca_issuer_common_name }}
+
+          [ v3_ca ]
+          basicConstraints = critical,CA:TRUE
+          keyUsage = critical,keyCertSign,cRLSign
+          subjectKeyIdentifier = hash
+          authorityKeyIdentifier = keyid:always,issuer
+  when: ca_issuer_info.resources | length == 0

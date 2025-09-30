@@ -1,2 +1,0 @@
----
-package_clause: "'kbcli' not in ansible_facts.packages"

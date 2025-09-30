@@ -1,0 +1,3 @@
+---
+# https://kubespray.io/#/docs/operations/etcd
+etcd_deployment_type: host

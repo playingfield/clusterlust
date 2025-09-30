@@ -1,0 +1,11 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Manage CA Issuer
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tags: [apps, ca_issuer]
+  tasks:
+    - name: Manage CA Issuer
+      ansible.builtin.include_role:
+        name: ca_issuer

@@ -1,0 +1,47 @@
+---
+# Check if ClusterIssuer bootstrap-ca exists
+- name: Check if Secret ca-key-pair exists
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: ca-key-pair
+    namespace: cert-manager
+  register: ca_secret_info
+
+- name: Check if ClusterIssuer ca-issuer exists
+  kubernetes.core.k8s_info:
+    api_version: cert-manager.io/v1
+    kind: ClusterIssuer
+    name: ca-issuer
+  register: ca_issuer_info
+
+- name: Check if ConfigMap ca-config exists
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: ConfigMap
+    name: ca-config
+    namespace: cert-manager
+  register: ca_config_info
+
+- name: Fail if ca-key-pair Secret is missing
+  ansible.builtin.fail:
+    msg: "ca-key-pair Secret is missing!"
+  when: (ca_secret_info.resources | default([])) | length == 0
+
+- name: Fail if ca-issuer is missing
+  ansible.builtin.fail:
+    msg: "ca-issuer ClusterIssuer is missing!"
+  when: (ca_issuer_info.resources | default([])) | length == 0
+
+- name: Fail if ca-config ConfigMap is missing
+  ansible.builtin.fail:
+    msg: "ca-config ConfigMap is missing!"
+  when: (ca_config_info.resources | default([])) | length == 0
+
+- name: Display verification summary
+  ansible.builtin.debug:
+    msg: "✅ All CA resources are installed correctly!"
+  when:
+    - (ca_secret_info.resources | default([])) | length > 0
+    - (ca_issuer_info.resources | default([])) | length > 0
+    - (ca_config_info.resources | default([])) | length > 0

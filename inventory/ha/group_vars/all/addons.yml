@@ -1,0 +1,22 @@
+---
+
+cert_manager_enabled: true
+csi_snapshot_controller_enabled: true
+helm_enabled: true
+ingress_nginx_enabled: true
+ingress_nginx_host_network: true
+# Rancher Local Path Provisioner
+local_path_provisioner_enabled: true
+# local_path_provisioner_namespace: "local-path-storage"
+# local_path_provisioner_storage_class: "local-path"
+# local_path_provisioner_reclaim_policy: Delete
+# local_path_provisioner_claim_root: /opt/local-path-provisioner/
+# local_path_provisioner_debug: false
+local_path_provisioner_image_repo: "{{ docker_image_repo }}/rancher/local-path-provisioner"
+local_path_provisioner_image_tag: "v0.0.32"
+# local_path_provisioner_helper_image_repo: "busybox"
+# local_path_provisioner_helper_image_tag: "latest"
+
+metrics_server_enabled: true
+metrics_server_kubelet_insecure_tls: true
+persistent_volumes_enabled: true
