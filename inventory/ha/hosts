@@ -35,7 +35,7 @@ kube_node
 [controller]
 localhost ansible_host=127.0.0.1
 
-[localhost:vars]
+[controller:vars]
 ansible_connection=local
 ansible_python_interpreter=/home/semaphore/venv/bin/python3.12
 
